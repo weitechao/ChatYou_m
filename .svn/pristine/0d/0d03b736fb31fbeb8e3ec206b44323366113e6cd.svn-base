@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!-- 支付宝相关 -->
+<properties>
+   <!-- windows -->
+	<entry key="winffmpeg">D://ffmpeg.exe</entry>
+	<entry key="centosfileUrl">/screenshot/123.jpg</entry>
+	<!-- windows -->
+	<entry key="windowsfileUrl">F:/screenshot/123.jpg</entry>
+	<!-- 渠道推广背景图片存储路径   windows -->
+	<entry key="windows_speed_fileUrl">D:/speed/img/</entry>
+	<!-- 渠道推广背景图片存储路径   centos -->
+	<entry key="centos_speed_fileUrl">/speed/img/</entry>
+    <!-- 微信提现加密文件 -->
+    <entry key="cert">/secretkey/cert/apiclient_cert.p12</entry>
+    <!-- 微信支付IP地址 -->
+    <entry key="spbill_create_ip">106.15.88.38</entry>
+    <!-- 项目名称 -->
+    <entry key="projectName">demo</entry>
+    <!-- 项目APP访问地址 -->
+    <entry key="project_url">http://app.1-liao.cn</entry>
+    <!-- 调用通知地址 -->
+    <entry key="noticeUrl">http://app.1-liao.cn/app/sendSocketNotice.do</entry>
+    <!-- 推送相关 -->
+    <entry key="app_key">40f7d4d87dd5a8397fc9af4a</entry>
+    <entry key="master_secret">2ee10b360f319b547be543c5</entry>
+    
+    <entry key="showapi_appid">50628</entry>
+    
+    <entry key="showapi_sign">e74cb8f4f8854a53a2df383c4d4d9793</entry>
+</properties>

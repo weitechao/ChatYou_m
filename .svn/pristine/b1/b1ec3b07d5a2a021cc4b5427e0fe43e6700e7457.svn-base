@@ -1,0 +1,27 @@
+#mysql
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/chat?characterEncoding=utf-8
+#jdbc.url=jdbc:mysql://bj-cdb-1xqhfy4i.sql.tencentcdb.com:63212/chat?characterEncoding=utf-8
+#jdbc.url=jdbc:mysql://118.25.231.110:3306/zb?characterEncoding=utf-8
+#jdbc.url=jdbc\:mysql\://106.15.88.38\:3306/chat?characterEncoding\=utf-8
+jdbc.username=root
+#\u817E\u8BAF password -> yiliaokeji2018
+#\u963F\u91CC\u4E91 password ->Root@test!@#$%1230.
+jdbc.password=root
+
+hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+
+#sqlserver
+#hibernate.dialect=org.hibernate.dialect.SQLServerDialect
+
+
+hibernate.hbm2ddl.auto=none
+hibernate.show_sql=true 
+hibernate.format_sql=false
+hibernate.current_session_context_class=org.springframework.orm.hibernate4.SpringSessionContext
+hibernate.cache.use_query_cache=false
+hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+hibernate.ehcache_config_file=/config/ehcache.xml
+javax.persistence.validation.mode=none
+hibernate.connection.release_mode=after_transaction
+
