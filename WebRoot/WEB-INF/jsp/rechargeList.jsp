@@ -37,6 +37,21 @@
 	                      <option value="0">VIP充值</option>
 	                      <option value="1">金币充值</option>
 					</select>
+					 <button class="btn btn-default" style="float: left;">币种:</button>
+				    <select id="search_gold_type"  style="width: 200px;float: left;margin-right: 20px;height: 36px;" onchange="on_end_change();" class="form-control">
+	                      <option value="0">全部类型</option>
+	                      <option value="1">人民币</option>
+	                      <option value="2">新台币</option>
+					</select>
+					 <button class="btn btn-default" style="float: left;">支付类型:</button>
+				    <select id="search_pay_type"  style="width: 200px;float: left;margin-right: 20px;height: 36px;" onchange="on_pay_change();" class="form-control">
+	                      <option value="-1">全部类型</option>
+	                      <option value="0">支付宝</option>
+	                      <option value="1">微信</option>
+	                      <option value="2">pepay</option>
+	                      <option value="3">Google pay</option>
+	                      <option value="4">iPhone 内购</option>
+					</select>
 					<span class="btn btn-default" style="float: left;">开始日期:</span>
 					<div class="input-group" style="width: 200px;float: left;margin-right: 20px;">
 					    <input type="text" class="form-control" id="beginTime" style="height: 36px;">

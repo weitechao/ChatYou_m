@@ -34,17 +34,32 @@ function ajax_table() {
 			field : 'time',
 			align : 'center'
 		}, {
-			title : '入账金额',
+			title : '人民币入账金额',
 			align : 'center',
 			field : 'income'
 		}, {
+			title : '新台币入账金额',
+			align : 'center',
+			field : 'tbincome'
+		}, {
 			title : '支出金额',
 			align : 'center',
-			field : 'expenditure'
+			field : ' '
 		}, {
-			title : '营业收入',
+			title : '人民币营业收入',
 			align : 'center',
 			field : 'profit',
+			formatter : function(value) {
+				if (value < 0) {
+					return '<span style="color:#00FF00;">' + value + '</span>';
+				} else if (value > 0) {
+					return '<span style="color:	red;">' + value + '</span>';
+				}
+			}
+		}, {
+			title : '新台币营业收入',
+			align : 'center',
+			field : 'profittb',
 			formatter : function(value) {
 				if (value < 0) {
 					return '<span style="color:#00FF00;">' + value + '</span>';

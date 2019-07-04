@@ -139,7 +139,7 @@ public interface SystemSetUpService {
 	MessageUtil setSystemSetUp(int t_id, int t_scope, String t_android_download, String t_ios_download,
 			String t_system_lang_girl, String t_system_lang_male, BigDecimal t_default_text, BigDecimal t_default_video,
 			BigDecimal t_default_phone, BigDecimal t_default_weixin, String t_award_rules, String t_service_qq,
-			String t_nickname_filter,String t_video_hint,String t_spreed_hint);
+			String t_nickname_filter,String t_video_hint,String t_spreed_hint,int t_zhekou);
 
 	/**
 	 * 获取帮助列表

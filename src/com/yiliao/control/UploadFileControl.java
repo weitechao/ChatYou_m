@@ -175,6 +175,7 @@ public class UploadFileControl {
 		// 1 初始化用户身份信息(secretId, secretKey)
 		COSCredentials cred = new BasicCOSCredentials(map.get("t_secret_id")
 				.toString(), map.get("t_secret_key").toString());
+		
 		// 2 设置bucket的区域, COS地域的简称请参照
 		// https://cloud.tencent.com/document/product/436/6224
 		ClientConfig clientConfig = new ClientConfig(new Region(map.get("t_region").toString()));
@@ -187,8 +188,7 @@ public class UploadFileControl {
 		// 设置存储类型, 默认是标准(Standard), 低频(standard_ia)
 		putObjectRequest.setStorageClass(StorageClass.Standard);
 		try {
-			PutObjectResult putObjectResult = cosclient
-					.putObject(putObjectRequest);
+			PutObjectResult putObjectResult = cosclient.putObject(putObjectRequest);
 			// putobjectResult会返回文件的etag
 			String etag = putObjectResult.getETag();
 			System.out.println(etag);

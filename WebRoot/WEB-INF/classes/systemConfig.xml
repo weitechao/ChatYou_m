@@ -18,9 +18,9 @@
     <!-- 项目名称 -->
     <entry key="projectName">巧遇</entry>
     <!-- 项目APP访问地址 -->
-    <entry key="project_url">http://chatyou.1-liao.cn:8088</entry>
+    <entry key="project_url">http://app.chatyou.cc</entry>
     <!-- 调用通知地址 -->
-    <entry key="noticeUrl">http://chatyou.1-liao.cn:8088/app/sendSocketNotice.html</entry>
+    <entry key="noticeUrl">http://app.chatyou.cc/app/sendSocketNotice.html</entry>
     <!-- 推送相关 -->
     <entry key="app_key">b68c1fb164619c2ea2d4ad4c</entry>
     <entry key="master_secret">6caeb4db0ec629e47fb8696a</entry>

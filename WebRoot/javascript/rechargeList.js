@@ -18,6 +18,8 @@ function ajax_table() {
 				pageSize : params.limit,
 				page : params.pageNumber,
 				type : $("#type").val(),
+				t_gold_type : $("#search_gold_type").val(),
+				t_payment_type : $("#search_pay_type").val(),
 				beginTime : $('#beginTime').val(),
 				endTime : $('#endTime').val()
 			}
@@ -42,6 +44,13 @@ function ajax_table() {
 			align : 'center',
 			field : 't_recharge_money'
 		}, {
+			title : '币种',
+			align : 'center',
+			field : 't_gold_type',
+			formatter : function(value) {
+				return value == 1 ? '人民币' : '新台币';
+			}
+		}, {
 			title : '订单号',
 			align : 'center',
 			field : 't_order_no'
@@ -57,7 +66,25 @@ function ajax_table() {
 			align : 'center',
 			field : 't_payment_type',
 			formatter : function(value) {
-				return value == 0 ? '支付宝' : '微信';
+				var res = '';
+				if(value == 0){
+					res = '支付宝';
+				}
+				if(value == 1){
+					res = '微信';
+				}
+				if(value == 2){
+					res = 'pepay';
+				}
+				if(value == 3){
+					res = 'Google pay';
+				}
+				if(value == 4){
+					res = 'iPhone 内购';
+				}
+				//return value == 0 ? '支付宝' : '微信';  0.支付宝 1.微信 2.pepay 3.Google pay  4. iPhone 内购
+				return res;
+				
 			}
 		}, {
 			title : '创建时间',
@@ -199,6 +226,8 @@ function ajax_getTotalMoney() {
 		url : path + '/admin/getTotalMoney.htm',
 		data : {
 			type : $("#type").val(),
+			t_gold_type : $("#search_gold_type").val(),
+			t_payment_type : $("#search_pay_type").val(),
 			beginTime : $('#beginTime').val(),
 			endTime : $('#endTime').val()
 		},
@@ -216,6 +245,20 @@ function ajax_getTotalMoney() {
 
 /** 选择后跳转 */
 function on_change() {
+	$("#utable").bootstrapTable('destroy');
+	ajax_table();
+	ajax_getTotalMoney();
+}
+
+/** 选择后跳转 */
+function on_end_change() {
+	$("#utable").bootstrapTable('destroy');
+	ajax_table();
+	ajax_getTotalMoney();
+}
+
+/** 选择后跳转 */
+function on_pay_change() {
 	$("#utable").bootstrapTable('destroy');
 	ajax_table();
 	ajax_getTotalMoney();

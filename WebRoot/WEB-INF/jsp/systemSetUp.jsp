@@ -63,6 +63,20 @@ var path = '${pageContext.request.contextPath}';
 											</div>
 										</div>
 										<div class="form-group">
+											<label class="col-md-2 control-label">默认VIP折扣:</label>
+											<div class="col-md-8">
+												<div class="input-group input-icon right">
+													<span class="input-group-addon">
+														<i class="glyphicon glyphicon-text-color"></i>
+													</span>
+													<input type="text" id="t_zhekou"  class="form-control1" placeholder="默认VIP折扣...." onfocus="on_focus('t_zhekou','默认VIP折扣....;')" onblur="on_blur('t_zhekou')">
+												</div>
+											</div>
+											<div class="col-sm-2" id="t_default_text_validate">
+												<p class="help-block" style="color: red;">*</p>
+											</div>
+										</div>
+										<div class="form-group">
 											<label class="col-md-2 control-label">默认视频收费:</label>
 											<div class="col-md-8">
 												<div class="input-group input-icon right">

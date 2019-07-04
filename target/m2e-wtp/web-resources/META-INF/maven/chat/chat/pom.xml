@@ -13,14 +13,8 @@
 		<spring.security.version>4.2.7.RELEASE</spring.security.version>
 		<hibernate.version>3.3.1.GA</hibernate.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<mysql.version>5.1.36</mysql.version>
 	</properties>
 	<dependencies>
-	<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-		</dependency>
 		<!-- spring core/beans/aop/web/webmvc begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -283,17 +277,23 @@
 			<version>3.3.7</version>
 		</dependency>
 		<!-- 极光推送 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>cn.jpush.api</groupId>
 			<artifactId>jpush-client</artifactId>
 			<version>3.3.7</version>
-		</dependency> -->
+		</dependency>
 		<!-- 极光推送 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>cn.jpush.api</groupId>
 			<artifactId>jpush-client</artifactId>
 			<version>3.3.7</version>
-		</dependency> -->
+		</dependency>
+		<!-- 腾讯云短信 -->
+		<dependency>
+			<groupId>com.github.qcloudsms</groupId>
+			<artifactId>qcloudsms</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 		<!-- 腾讯云短信 -->
 		<dependency>
 			<groupId>com.github.qcloudsms</groupId>
@@ -306,12 +306,6 @@
 			<artifactId>qcloudsms</artifactId>
 			<version>1.0.2</version>
 		</dependency>
-		<!-- 腾讯云短信 -->
-		<!-- <dependency>
-			<groupId>com.github.qcloudsms</groupId>
-			<artifactId>qcloudsms</artifactId>
-			<version>1.0.2</version>
-		</dependency> -->
 		<!-- 腾讯 oss 对象存储 -->
 		<dependency>
             <groupId>com.qcloud</groupId>
@@ -349,73 +343,11 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<verbal>true</verbal>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 		</plugins>
-	</build> 
-	
-	<!-- <build>
-		<sourceDirectory>${basedir}/src</sourceDirectory>
-		<outputDirectory>${basedir}/WebRoot/WEB-INF/classes</outputDirectory>
-		<resources>
-			<resource>
-				<directory>${basedir}/src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<verbal>true</verbal>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<warName>${project.artifactId}</warName>
-					<webResources>
-						<resource>
-							<directory>libs/</directory>
-							<targetPath>WEB-INF/lib</targetPath>
-							<includes>
-								<include>**/*.jar</include>
-							</includes>
-						</resource>
-					
-					</webResources>
-					 <webXml>WebRoot\WEB-INF\web.xml</webXml>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<port>8080</port>
-					<path>/</path>
-					<uriEncoding>UTF-8</uriEncoding>
-					  注意此处的url,修改成tomcat监听的端口即可
-	                <url>http://localhost:8080/manager/text</url>
-	                <username>admin</username>
-	                <password>admin</password>
-	                <server>Tomcat7</server> 此处的名字必须和setting.xml中配置的ID一致
-				</configuration>
-			</plugin>
-		</plugins>
-	</build> -->
+	</build>
 </project>

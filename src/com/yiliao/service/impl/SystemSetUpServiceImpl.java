@@ -324,15 +324,15 @@ public class SystemSetUpServiceImpl extends ICommServiceImpl implements SystemSe
 	public MessageUtil setSystemSetUp(int t_id, int t_scope, String t_android_download, String t_ios_download,
 			String t_system_lang_girl, String t_system_lang_male, BigDecimal t_default_text, BigDecimal t_default_video,
 			BigDecimal t_default_phone, BigDecimal t_default_weixin, String t_award_rules, String t_service_qq,
-			String t_nickname_filter,String t_video_hint,String t_spreed_hint) {
+			String t_nickname_filter,String t_video_hint,String t_spreed_hint,int t_zhekou) {
 
 		try {
 
-			String uSql = " UPDATE t_system_setup SET t_scope = ? ,t_android_download = ? ,t_ios_download = ?, t_system_lang_girl = ?, t_system_lang_male = ?,t_default_text = ? ,t_default_video = ?,t_default_phone = ?,t_default_weixin = ?,t_award_rules = ?,t_service_qq = ? ,t_nickname_filter = ?,t_video_hint = ? ,t_spreed_hint = ?  WHERE t_id = ?  ";
+			String uSql = " UPDATE t_system_setup SET t_scope = ? ,t_android_download = ? ,t_ios_download = ?, t_system_lang_girl = ?, t_system_lang_male = ?,t_default_text = ? ,t_default_video = ?,t_default_phone = ?,t_default_weixin = ?,t_award_rules = ?,t_service_qq = ? ,t_nickname_filter = ?,t_video_hint = ? ,t_spreed_hint = ?  ,t_zhekou = ?  WHERE t_id = ?  ";
 
 			this.getFinalDao().getIEntitySQLDAO().executeSQL(uSql, t_scope, t_android_download, t_ios_download,
 					t_system_lang_girl, t_system_lang_male, t_default_text, t_default_video, t_default_phone,
-					t_default_weixin, t_award_rules, t_service_qq, t_nickname_filter,t_video_hint,t_spreed_hint, t_id);
+					t_default_weixin, t_award_rules, t_service_qq, t_nickname_filter,t_video_hint,t_spreed_hint, t_zhekou,t_id);
 
 			return new MessageUtil(1, "系统设置已更新!");
 		} catch (Exception e) {

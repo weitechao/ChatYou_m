@@ -49,9 +49,12 @@ public class FinancialDetailsServiceImpl extends ICommServiceImpl implements
 			
 			List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
 			
-			String reSql = "SELECT sum(t_recharge_money) AS totalMoney FROM t_recharge WHERE  t_order_state = 1 AND t_fulfil_time  BETWEEN  ? and ? ";
+			String reSql = "SELECT sum(t_recharge_money) AS totalMoney FROM t_recharge WHERE  t_order_state = 1 AND t_payment_type !=2  AND  t_payment_type !=3  AND t_fulfil_time  BETWEEN  ? and ?  ";
+			//RMB
+			String reSqll = "SELECT sum(t_recharge_money) AS totalMoney FROM t_recharge WHERE  t_order_state = 1 AND t_payment_type !=0  AND  t_payment_type !=1  AND  t_payment_type !=4 AND t_fulfil_time  BETWEEN  ? and ?  ";
+			//TB
 			String putSql = "SELECT sum(t_money) AS totalMoney FROM t_put_forward WHERE t_order_state =2 AND t_handle_time BETWEEN ? AND ? ";
-			
+			//0.支付宝 1.微信 2.pepay 3.Google pay  4. iPhone 内购
 			
 			Map<String, Object> map = null;
 			
@@ -61,7 +64,11 @@ public class FinancialDetailsServiceImpl extends ICommServiceImpl implements
 				map.put("time", str);
 				Map<String, Object> resMap = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(reSql, str+" 00:00:00", str+" 23:59:59");
 				
-				map.put("income", null==resMap.get("totalMoney")?0:resMap.get("totalMoney"));
+				map.put("income", null==resMap.get("totalMoney")?0:resMap.get("totalMoney")); //人民币
+				
+				Map<String, Object> resMapTb = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(reSqll, str+" 00:00:00", str+" 23:59:59");
+				
+				map.put("tbincome", null==resMapTb.get("totalMoney")?0:resMapTb.get("totalMoney")); //台币
 				
 				Map<String, Object> putMap = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(putSql, str+" 00:00:00", str+" 23:59:59");
 				
@@ -70,6 +77,19 @@ public class FinancialDetailsServiceImpl extends ICommServiceImpl implements
 				BigDecimal balance = new BigDecimal(map.get("income").toString()).subtract(new BigDecimal(map.get("expenditure").toString())).setScale(2, BigDecimal.ROUND_DOWN);
 				
 				map.put("profit", balance);
+				
+				
+                BigDecimal balanceTb = new BigDecimal(map.get("tbincome").toString()).subtract(new BigDecimal(map.get("expenditure").toString())).setScale(2, BigDecimal.ROUND_DOWN);
+				
+				map.put("profittb", balanceTb);
+				
+				/*time 统计日期
+				 *income 入账金额
+				 *expenditure 支出金额
+				 *profit  营业收入
+				 * 
+				 * */
+				
 				
 				//装载数据
 				data.add(map);
@@ -82,6 +102,7 @@ public class FinancialDetailsServiceImpl extends ICommServiceImpl implements
 			logger.error("获取列表异常!", e);
 		}
 		return json;
+		
 	}
 
 	/*
