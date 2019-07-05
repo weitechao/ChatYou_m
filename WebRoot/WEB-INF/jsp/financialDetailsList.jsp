@@ -60,8 +60,14 @@
 				<div class="agile-tables">
 					<div class="w3l-table-info">
 						<span class="btn btn-default"
-							style="float: right;margin-right: 3%;background-color: #2ec9de">总收益:￥<span
+							style="float: right;margin-right: 3%;background-color: #2ec9de">人民币总收益:￥<span
 							id="profit">5000</span></span>
+					</div>
+					<div class="agile-tables">
+					<div class="w3l-table-info">
+						<span class="btn btn-default"
+							style="float: right;margin-right: 3%;background-color: #2ec9de">新台币总收益:￥<span
+							id=tb_profit>5000</span></span>
 					</div>
 				</div>
 			</div>

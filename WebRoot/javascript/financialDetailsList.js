@@ -87,6 +87,7 @@ function ajax_getTotalMoney() {
 				$("#profit").html(
 						null == data.m_object.totalMoney ? 0
 								: data.m_object.totalMoney);
+				$("#tb_profit").html(data.m_object.tbtotal);
 				$("#pay")
 						.html(
 								null == data.m_object.putPay ? 0

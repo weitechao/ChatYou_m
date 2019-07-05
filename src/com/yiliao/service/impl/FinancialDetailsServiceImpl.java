@@ -114,20 +114,28 @@ public class FinancialDetailsServiceImpl extends ICommServiceImpl implements
 		
 		MessageUtil mu = new MessageUtil();
 		try {
-			String reSql = "SELECT sum(t_recharge_money) AS totalMoney FROM t_recharge WHERE  t_order_state = 1";
+			String reSql = "SELECT sum(t_recharge_money) AS totalMoney FROM t_recharge WHERE  t_order_state = 1 AND t_payment_type != 2 AND t_payment_type != 3 "; //人民币
+			String reSqlTb = "SELECT sum(t_recharge_money) AS totalMoney FROM t_recharge WHERE  t_order_state = 1   AND t_payment_type != 0 AND t_payment_type != 1 AND t_payment_type != 4  "; //台币
 			String putSql = "SELECT sum(t_money) AS totalMoney FROM t_put_forward WHERE t_order_state = 2 ";
 			
 			if(null !=beginTime && !beginTime.trim().isEmpty() && null!=endTime && !endTime.trim().isEmpty()){
 				
 				reSql = reSql+" AND t_fulfil_time  BETWEEN  '"+beginTime+" 00:00:00' and  '"+endTime+" 23:59:59'";
+				reSqlTb = reSqlTb+" AND t_fulfil_time  BETWEEN  '"+beginTime+" 00:00:00' and  '"+endTime+" 23:59:59'";
 				putSql = putSql + "AND t_handle_time BETWEEN '"+beginTime+" 00:00:00' AND '"+endTime+" 23:59:59'";
 			}
-			
+			/*logger.info(reSql);
+			logger.info("------------------------------------------------");
+			logger.info(reSqlTb);*/
 			Map<String, Object> map = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(reSql);
-			
+			Map<String, Object> mapTb = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(reSqlTb);
 			Map<String, Object> putMap = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(putSql);
 			
+			
+			
+			
 			map.put("putPay", putMap.get("totalMoney"));
+			map.put("tbtotal", mapTb.get("totalMoney"));
 			
 			mu.setM_istatus(1);
 			mu.setM_object(map);

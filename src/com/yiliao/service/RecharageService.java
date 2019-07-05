@@ -11,13 +11,13 @@ public interface RecharageService {
 	 * @param type
 	 * @param page
 	 */
-	public JSONObject getRecharageList(int type,int t_gold_type,int t_payment_type,String beginTime,String endTime,int page);
+	public JSONObject getRecharageList(int type,int t_gold_type,int t_payment_type, int t_order_state,String beginTime,String endTime,int page);
 	
 	/**
 	 * 获取统计金额
 	 * @param type
 	 * @return
 	 */
-	public MessageUtil getTotalMoney(int type,int t_gold_type,int t_payment_type,String beginTime,String endTime);
+	public MessageUtil getTotalMoney(int type,int t_gold_type,int t_payment_type,int  t_order_state,String beginTime,String endTime);
 
 }

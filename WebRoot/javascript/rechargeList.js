@@ -20,6 +20,7 @@ function ajax_table() {
 				type : $("#type").val(),
 				t_gold_type : $("#search_gold_type").val(),
 				t_payment_type : $("#search_pay_type").val(),
+				t_order_state : $("#search_pay_status").val(),
 				beginTime : $('#beginTime').val(),
 				endTime : $('#endTime').val()
 			}
@@ -228,6 +229,7 @@ function ajax_getTotalMoney() {
 			type : $("#type").val(),
 			t_gold_type : $("#search_gold_type").val(),
 			t_payment_type : $("#search_pay_type").val(),
+			t_order_state : $("#search_pay_status").val(),
 			beginTime : $('#beginTime').val(),
 			endTime : $('#endTime').val()
 		},
@@ -236,6 +238,7 @@ function ajax_getTotalMoney() {
 			console.log(data);
 			if (data.m_istatus == 1) {
 				$("#money").html(data.m_object);
+				$('#tb_money').append(data.m_strMessage);
 			} else {
 				window.location.href = path + '/error.html';
 			}
@@ -259,6 +262,13 @@ function on_end_change() {
 
 /** 选择后跳转 */
 function on_pay_change() {
+	$("#utable").bootstrapTable('destroy');
+	ajax_table();
+	ajax_getTotalMoney();
+}
+
+/** 选择后跳转 */
+function on_paystatus_change() {
 	$("#utable").bootstrapTable('destroy');
 	ajax_table();
 	ajax_getTotalMoney();

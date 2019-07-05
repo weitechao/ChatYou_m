@@ -18,7 +18,7 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 	Log logger = LogFactory.getLog(RecharageServiceImpl.class);
 	
 	@Override
-	public JSONObject getRecharageList(int type,int t_gold_type,int t_payment_type,String beginTime,String endTime, int page) {
+	public JSONObject getRecharageList(int type,int t_gold_type,int t_payment_type,int  t_order_state,String beginTime,String endTime, int page) {
 		JSONObject json = new JSONObject();
 		try {
 			//列表sql
@@ -38,6 +38,11 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 			if(t_payment_type>-1){
 				sql = sql + " AND  r.t_payment_type = "+t_payment_type;
 				countSql = countSql + " AND  r.t_payment_type ="+t_payment_type;
+			}
+			
+			if(t_order_state>-1){
+				sql = sql + " AND  r.t_order_state = "+t_order_state;
+				countSql = countSql + " AND  r.t_order_state ="+t_order_state;
 			}
 			
 			//判断时间是否为空
@@ -74,32 +79,46 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 	}
 
 	@Override
-	public MessageUtil getTotalMoney(int type,int t_gold_type,int t_payment_type,String beginTime,String endTime) {
+	public MessageUtil getTotalMoney(int type,int t_gold_type,int t_payment_type,int t_order_state,String beginTime,String endTime) {
 		try {
 			
-			String sql = "SELECT SUM(t_recharge_money) AS total FROM t_recharge WHERE  1=1 AND t_order_state = 1 ";
+			String sql = "SELECT SUM(t_recharge_money) AS total FROM t_recharge WHERE  1=1 AND t_payment_type != 2 AND t_payment_type != 3  AND t_order_state = 1 ";
+			String sqlTb = "SELECT SUM(t_recharge_money) AS total FROM t_recharge WHERE  1=1 AND t_payment_type != 0 AND t_payment_type != 1 AND t_payment_type != 4  AND t_order_state = 1 ";
 			
 			if(type !=-1){
 				sql = sql + " AND t_recharge_type ="+type ;
+				sqlTb = sqlTb + " AND t_recharge_type ="+type ;
 			}
 			
 			if(t_gold_type > 0){
 				sql = sql + " AND t_gold_type ="+t_gold_type ;
+				sqlTb = sqlTb + " AND t_gold_type ="+t_gold_type ;
 			}
 			if(t_payment_type > -1){
 				sql = sql + " AND t_payment_type ="+t_payment_type ;
+				sqlTb = sqlTb + " AND t_payment_type ="+t_payment_type ;
+			}
+			if(t_order_state > -1){
+				sql = sql + " AND t_order_state ="+t_order_state ;
+				sqlTb = sqlTb + " AND t_order_state ="+t_order_state ;
 			}
 			
 			//判断查询时间是否存在
 			if(StringUtils.isNotBlank(beginTime) && StringUtils.isNotBlank(endTime)){
 				sql = sql + " AND t_create_time BETWEEN '"+beginTime+" 00:00:00' AND '"+endTime+" 23:59:59' ";
+				sqlTb = sqlTb + " AND t_create_time BETWEEN '"+beginTime+" 00:00:00' AND '"+endTime+" 23:59:59' ";
 			}
 			Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(sql);
-			
+			//logger.info(sql);
+			//logger.info("-----------------------------------------------------------------");
+			//logger.info(sqlTb);
 			
 			MessageUtil mu = new MessageUtil();
 			mu.setM_istatus(1);
 			mu.setM_object(total.get("total"));
+			
+			Map<String, Object> totalTb = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(sqlTb);
+			mu.setM_strMessage(totalTb.get("total")+"");
 			
 			return mu;
 		} catch (Exception e) {

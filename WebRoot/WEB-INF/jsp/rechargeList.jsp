@@ -52,6 +52,13 @@
 	                      <option value="3">Google pay</option>
 	                      <option value="4">iPhone 内购</option>
 					</select>
+					 <button class="btn btn-default" style="float: left;">充值状态:</button>
+				    <select id="search_pay_status"  style="width: 200px;float: left;margin-right: 20px;height: 36px;" onchange="on_paystatus_change();" class="form-control">
+	                      <option value="-1">全部</option>
+	                      <option value="0">未支付</option>
+	                      <option value="1">已支付</option>
+	                     
+					</select>
 					<span class="btn btn-default" style="float: left;">开始日期:</span>
 					<div class="input-group" style="width: 200px;float: left;margin-right: 20px;">
 					    <input type="text" class="form-control" id="beginTime" style="height: 36px;">
@@ -77,7 +84,12 @@
 				
 				<div class="agile-tables">
 					<div class="w3l-table-info">
-						 <span class="btn btn-default" style="float: right;margin-right: 3%;background-color: #2ec9de">总额度:￥<span id="money">5000</span></span>
+						 <span class="btn btn-default" style="float: right;margin-right: 3%;background-color: #2ec9de">人民币总额度:￥<span id="money">5000</span></span>
+					</div>
+				</div>
+				<div class="agile-tables">
+					<div class="w3l-table-info">
+						 <span class="btn btn-default" style="float: right;margin-right: 3%;background-color: #2ec9de">新台币总额度:￥<span id="tb_money"></span></span>
 					</div>
 				</div>
 			</div>
