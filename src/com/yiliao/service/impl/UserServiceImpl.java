@@ -34,9 +34,9 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	 * 保存用户并返回用户编号(non-Javadoc)
 	 * 
 	 * @see com.yiliao.service.UserService#saveUser(java.lang.String,
-	 * java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer,
-	 * java.lang.Integer, java.lang.String, java.lang.String, java.lang.String,
-	 * java.lang.String, java.lang.String, java.lang.Integer)
+	 * java.lang.String, java.lang.Integer, java.lang.Integer,
+	 * java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String,
+	 * java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)
 	 */
 	@Override
 	public int saveUser(String nickName, String phone, Integer sex, Integer age, Integer t_height, Integer t_weight,
@@ -67,15 +67,24 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	/**
 	 * 新增用户
 	 * 
-	 * @param t_nickName      用户昵称
-	 * @param t_sex           用户性别
-	 * @param t_age           用户年龄
-	 * @param t_handImg       用户
-	 * @param t_phone         用户电话
-	 * @param t_constellation 用户星座
-	 * @param t_city          用户城市
-	 * @param t_vocation      用户职业
-	 * @param marking         推广标示
+	 * @param t_nickName
+	 *            用户昵称
+	 * @param t_sex
+	 *            用户性别
+	 * @param t_age
+	 *            用户年龄
+	 * @param t_handImg
+	 *            用户
+	 * @param t_phone
+	 *            用户电话
+	 * @param t_constellation
+	 *            用户星座
+	 * @param t_city
+	 *            用户城市
+	 * @param t_vocation
+	 *            用户职业
+	 * @param marking
+	 *            推广标示
 	 */
 	private int addUser(String t_nickName, Integer t_sex, Integer t_age, Integer t_height, Integer t_weight,
 			String t_handImg, String t_phone, String t_constellation, String t_city, String t_vocation,
@@ -335,17 +344,17 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	 * @see com.yiliao.service.UserService#freezeOnesUser(int, int)
 	 */
 	@Override
-	public MessageUtil freezeOnesUser(int t_id, int freeze_time, String pushConnent,String user) {
+	public MessageUtil freezeOnesUser(int t_id, int freeze_time, String pushConnent, String user) {
 		try {
-			
-			if(freeze_time == -1) {
-				//设置用户的状态
+
+			if (freeze_time == -1) {
+				// 设置用户的状态
 				String upSql = "UPDATE t_user SET t_disable = ? WHERE t_id = ? ";
-				this.getFinalDao().getIEntitySQLDAO().executeSQL(upSql,2, t_id);
-				
+				this.getFinalDao().getIEntitySQLDAO().executeSQL(upSql, 2, t_id);
+
 				// 推送自定义消息
 				PushUtil.sendPush(t_id, pushConnent, "1");
-			}else {
+			} else {
 				// 修改用户记录
 				String sql = "UPDATE t_user SET t_disable = 1 WHERE t_id = ?";
 				this.getFinalDao().getIEntitySQLDAO().executeSQL(sql, t_id);
@@ -360,7 +369,8 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 				long time = DateUtils.parse(format, DateUtils.FullDatePattern).getTime();
 
 				this.getFinalDao().getIEntitySQLDAO().executeSQL(sql, t_id, freeze_time, format,
-						DateUtils.format((ms + time), DateUtils.FullDatePattern),user,DateUtils.format(new Date(), DateUtils.FullDatePattern),pushConnent);
+						DateUtils.format((ms + time), DateUtils.FullDatePattern), user,
+						DateUtils.format(new Date(), DateUtils.FullDatePattern), pushConnent);
 
 				// 推送还是socket 待定
 				String messageSql = "INSERT INTO t_message (t_user_id, t_message_content, t_create_time, t_is_see) VALUES (?, ?, ?, ?);";
@@ -1509,7 +1519,7 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	}
 
 	@Override
-	public MessageUtil giveUserGold(int t_id, int goid,int role_id) {
+	public MessageUtil giveUserGold(int t_id, int goid, int role_id) {
 		try {
 
 			rebateRedPacket(role_id, t_id, "官方赠送[" + goid + "]个金币!", new BigDecimal(goid), 3);
@@ -1526,11 +1536,16 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	/**
 	 * 存储红包记录
 	 * 
-	 * @param t_hair_userId       贡献者
-	 * @param t_receive_userId    接收人
-	 * @param t_redpacket_content 提示内容
-	 * @param t_redpacket_gold    金币
-	 * @param t_redpacket_type    红包类型 0.赠送红包 1.贡献红包2.主播认证红包 3.后台添加红包
+	 * @param t_hair_userId
+	 *            贡献者
+	 * @param t_receive_userId
+	 *            接收人
+	 * @param t_redpacket_content
+	 *            提示内容
+	 * @param t_redpacket_gold
+	 *            金币
+	 * @param t_redpacket_type
+	 *            红包类型 0.赠送红包 1.贡献红包2.主播认证红包 3.后台添加红包
 	 */
 	private void rebateRedPacket(int t_hair_userId, int t_receive_userId, String t_redpacket_content,
 			BigDecimal t_redpacket_gold, int t_redpacket_type) {
@@ -1561,15 +1576,15 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	}
 
 	@Override
-	public MessageUtil saveOrUpdateNominate(int userId, int t_is_nominate,int t_sort) {
+	public MessageUtil saveOrUpdateNominate(int userId, int t_is_nominate, int t_sort) {
 		try {
 
-			//取消推荐
-			if(t_is_nominate == 0) {
+			// 取消推荐
+			if (t_is_nominate == 0) {
 				String uSql = " DELETE FROM t_spread  WHERE t_user_id = ? ";
 				this.getFinalDao().getIEntitySQLDAO().executeSQL(uSql, userId);
-				
-			}else { //新增或者修改推荐值
+
+			} else { // 新增或者修改推荐值
 				String qSql = " SELECT * FROM t_spread WHERE t_user_id = ? ";
 
 				List<Map<String, Object>> dataList = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql, userId);
@@ -1577,14 +1592,14 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 				if (dataList.isEmpty()) {
 
 					String inSql = " INSERT INTO t_spread (t_user_id, t_is_nominate,t_sort) VALUES (?, ?, ?); ";
-					this.getFinalDao().getIEntitySQLDAO().executeSQL(inSql, userId, t_is_nominate,t_sort);
+					this.getFinalDao().getIEntitySQLDAO().executeSQL(inSql, userId, t_is_nominate, t_sort);
 
 				} else {
-					String uSql="UPDATE t_spread SET  t_sort= ? WHERE t_user_id = ?;";
-					this.getFinalDao().getIEntitySQLDAO().executeSQL(uSql, t_sort,userId);
+					String uSql = "UPDATE t_spread SET  t_sort= ? WHERE t_user_id = ?;";
+					this.getFinalDao().getIEntitySQLDAO().executeSQL(uSql, t_sort, userId);
 				}
 			}
-			
+
 			mu = new MessageUtil(1, "操作成功!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1788,135 +1803,145 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	@Override
 	public MessageUtil upUserData(int t_id, String t_nickName, String t_phone, Integer t_modal_sex, Integer t_age,
 			Integer t_height, Integer t_weight, String t_constellation, String t_city, String t_vocation,
-			String t_synopsis, String t_autograph,int t_user_role) {
+			String t_synopsis, String t_autograph, int t_user_role) {
 		try {
 			StringBuffer body = new StringBuffer();
 			body.append("UPDATE t_user SET ");
-			if(StringUtils.isNotBlank(t_nickName)) {
+			if (StringUtils.isNotBlank(t_nickName)) {
 				body.append("t_nickName = '").append(t_nickName).append("'");
 			}
-			if(StringUtils.isNotBlank(t_phone)) {
-				body.append(",t_phone = '").append(t_phone).append("'");			
+			if (StringUtils.isNotBlank(t_phone)) {
+				body.append(",t_phone = '").append(t_phone).append("'");
 			}
-			if(null != t_modal_sex && (t_modal_sex == 0 || t_modal_sex == 1)) {
+			if (null != t_modal_sex && (t_modal_sex == 0 || t_modal_sex == 1)) {
 				body.append(",t_sex = ").append(t_modal_sex);
 			}
-			if(null != t_age) {
+			if (null != t_age) {
 				body.append(",t_age = ").append(t_age);
 			}
-			if(null != t_height) {
+			if (null != t_height) {
 				body.append(",t_height = ").append(t_height);
 			}
-			if(null != t_weight ) {
+			if (null != t_weight) {
 				body.append(",t_weight = ").append(t_weight);
 			}
-			if(StringUtils.isNotBlank(t_constellation)) {
+			if (StringUtils.isNotBlank(t_constellation)) {
 				body.append(",t_constellation = '").append(t_constellation).append("'");
 			}
-			if(StringUtils.isNotBlank(t_city)) {
+			if (StringUtils.isNotBlank(t_city)) {
 				body.append(",t_city = '").append(t_city).append("'");
 			}
-			if(StringUtils.isNotBlank(t_vocation)) {
+			if (StringUtils.isNotBlank(t_vocation)) {
 				body.append(",t_vocation = '").append(t_vocation).append("'");
 			}
-			if(StringUtils.isNotBlank(t_synopsis)) {
+			if (StringUtils.isNotBlank(t_synopsis)) {
 				body.append(",t_synopsis = '").append(t_synopsis).append("'");
 			}
-			if(StringUtils.isNotBlank(t_autograph)) {
+			if (StringUtils.isNotBlank(t_autograph)) {
 				body.append(",t_autograph ='").append(t_autograph).append("'");
 			}
-			//判断用户角色是否修改
-			if(t_user_role == 1) {
-				//判断当前人是否已经是主播 
-				//如果是 那么无须插入数据
-				//否则写入默认数据
+			// 判断用户角色是否修改
+			if (t_user_role == 1) {
+				// 判断当前人是否已经是主播
+				// 如果是 那么无须插入数据
+				// 否则写入默认数据
 				List<Map<String, Object>> anthorSetUp = this.getFinalDao().getIEntitySQLDAO()
 						.findBySQLTOMap("SELECT * FROM t_anchor_setup WHERE t_user_id = ? ", t_id);
-				//如果该用户没有收费设置 那么设置收费设置
-				if(anthorSetUp.isEmpty()) {
-					
-					//查询出系统默认的收费设置
-					List<Map<String, Object>> systemSetUp = this.getFinalDao().getIEntitySQLDAO()
-							.findBySQLTOMap("SELECT t_default_text,t_default_video,t_default_phone,t_default_weixin FROM t_system_setup");
-					
-					if(!systemSetUp.isEmpty()) {
+				// 如果该用户没有收费设置 那么设置收费设置
+				if (anthorSetUp.isEmpty()) {
+
+					// 查询出系统默认的收费设置
+					List<Map<String, Object>> systemSetUp = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(
+							"SELECT t_default_text,t_default_video,t_default_phone,t_default_weixin FROM t_system_setup");
+
+					if (!systemSetUp.isEmpty()) {
 						// 给主播插入默认的收费设置
-						this.updateAnchorChargeSetup(t_id, 
+						this.updateAnchorChargeSetup(t_id,
 								new BigDecimal(systemSetUp.get(0).get("t_default_video").toString()),
-								new BigDecimal(systemSetUp.get(0).get("t_default_text").toString()), 
-								new BigDecimal(systemSetUp.get(0).get("t_default_phone").toString()), 
-								new BigDecimal(systemSetUp.get(0).get("t_default_weixin").toString()), 
-								null, null);
+								new BigDecimal(systemSetUp.get(0).get("t_default_text").toString()),
+								new BigDecimal(systemSetUp.get(0).get("t_default_phone").toString()),
+								new BigDecimal(systemSetUp.get(0).get("t_default_weixin").toString()), null, null);
 					}
 				}
-				
+
 			}
 			body.append(",t_role = ").append(t_user_role);
-			
-		
+
 			body.append(" WHERE t_id = ? ");
-			
+
 			this.getFinalDao().getIEntitySQLDAO().executeSQL(body.toString(), t_id);
-			
+
 			return new MessageUtil(1, "修改成功!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 设置默认收费设置
-	 * @param t_user_id 用户编号
-	 * @param t_video_gold 默认视频金币 
-	 * @param t_text_gold 默认文本聊天金币
-	 * @param t_phone_gold 默认查看手机金币
-	 * @param t_weixin_gold 默认查看微信金币
-	 * @param t_private_photo_gold 默认查看私密照片金币
-	 * @param t_private_video_gold 默认查看私密视频金币
+	 * 
+	 * @param t_user_id
+	 *            用户编号
+	 * @param t_video_gold
+	 *            默认视频金币
+	 * @param t_text_gold
+	 *            默认文本聊天金币
+	 * @param t_phone_gold
+	 *            默认查看手机金币
+	 * @param t_weixin_gold
+	 *            默认查看微信金币
+	 * @param t_private_photo_gold
+	 *            默认查看私密照片金币
+	 * @param t_private_video_gold
+	 *            默认查看私密视频金币
 	 */
-	private void updateAnchorChargeSetup(int t_user_id,BigDecimal t_video_gold, BigDecimal t_text_gold, BigDecimal t_phone_gold,
-			BigDecimal t_weixin_gold, BigDecimal t_private_photo_gold,
+	private void updateAnchorChargeSetup(int t_user_id, BigDecimal t_video_gold, BigDecimal t_text_gold,
+			BigDecimal t_phone_gold, BigDecimal t_weixin_gold, BigDecimal t_private_photo_gold,
 			BigDecimal t_private_video_gold) {
 
 		try {
 
 			String query = "select count(t_id) as total from t_anchor_setup where t_user_id = ?";
 
-			Map<String, Object> map = this.getFinalDao().getIEntitySQLDAO()
-					.findBySQLUniqueResultToMap(query, t_user_id);
-			
+			Map<String, Object> map = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(query,
+					t_user_id);
+
 			// 新增
 			if (0 == Integer.parseInt(map.get("total").toString())) {
 
 				String inSql = "INSERT INTO t_anchor_setup (t_user_id, t_video_gold, t_text_gold, t_phone_gold, t_weixin_gold) VALUES (?,?,?,?,?);";
 
-				this.getFinalDao()
-						.getIEntitySQLDAO()
-						.executeSQL(inSql, t_user_id, t_video_gold,
-								t_text_gold, t_text_gold, t_weixin_gold);
+				this.getFinalDao().getIEntitySQLDAO().executeSQL(inSql, t_user_id, t_video_gold, t_text_gold,
+						t_text_gold, t_weixin_gold);
 
 			} else { // 修改
 				String sql = "UPDATE t_anchor_setup SET ";
 				if (t_video_gold.compareTo(new BigDecimal(0)) > 0) {
-//					//验证主播
-//					//金币数修改为10——50这个区间。主播可以选择：10,15,20,25,30,35,40,45,50.
-//					//新主播最高只能设置每分钟30，提现达到100后，
-//					//才有设置40的选项，提现500后才有设置成50的选项
-//                    //获取主播是否存在提现
-//					String qSql = " SELECT SUM(t_money) AS totalMoney FROM t_put_forward  WHERE t_user_id  = ? ";
-//					Map<String, Object> putMoney = this.getMap(qSql, t_user_id);
-//					
-//					int totalMoney = new BigDecimal(null == putMoney.get("totalMoney")?"0":putMoney.get("totalMoney").toString()).intValue();
-//					
-//					if((totalMoney < 100 && t_video_gold<=30 && t_video_gold > 0)
-//							|| (totalMoney >=100 && totalMoney < 500 && t_video_gold <=40 && t_video_gold > 0)
-//							|| (totalMoney >= 500 && t_video_gold <= 50 && t_video_gold > 0)) {
-//					
-						sql = sql + " t_video_gold = " + t_video_gold + ",";
-//					}else {
-//						return new MessageUtil(-1, "视频聊天收费异常!");
-//					}
+					// //验证主播
+					// //金币数修改为10——50这个区间。主播可以选择：10,15,20,25,30,35,40,45,50.
+					// //新主播最高只能设置每分钟30，提现达到100后，
+					// //才有设置40的选项，提现500后才有设置成50的选项
+					// //获取主播是否存在提现
+					// String qSql = " SELECT SUM(t_money) AS totalMoney FROM
+					// t_put_forward WHERE t_user_id = ? ";
+					// Map<String, Object> putMoney = this.getMap(qSql,
+					// t_user_id);
+					//
+					// int totalMoney = new BigDecimal(null ==
+					// putMoney.get("totalMoney")?"0":putMoney.get("totalMoney").toString()).intValue();
+					//
+					// if((totalMoney < 100 && t_video_gold<=30 && t_video_gold
+					// > 0)
+					// || (totalMoney >=100 && totalMoney < 500 && t_video_gold
+					// <=40 && t_video_gold > 0)
+					// || (totalMoney >= 500 && t_video_gold <= 50 &&
+					// t_video_gold > 0)) {
+					//
+					sql = sql + " t_video_gold = " + t_video_gold + ",";
+					// }else {
+					// return new MessageUtil(-1, "视频聊天收费异常!");
+					// }
 				}
 				if (t_text_gold.compareTo(new BigDecimal(0)) > 0) {
 					sql = sql + " t_text_gold = " + t_text_gold + ",";
@@ -1925,12 +1950,10 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 					sql = sql + " t_weixin_gold = " + t_weixin_gold + ",";
 				}
 				if (t_private_photo_gold.compareTo(new BigDecimal(0)) > 0) {
-					sql = sql + " t_private_photo_gold = "
-							+ t_private_photo_gold + ",";
+					sql = sql + " t_private_photo_gold = " + t_private_photo_gold + ",";
 				}
 				if (t_private_video_gold.compareTo(new BigDecimal(0)) > 0) {
-					sql = sql + " t_private_video_gold = "
-							+ t_private_video_gold + ",";
+					sql = sql + " t_private_video_gold = " + t_private_video_gold + ",";
 				}
 				sql = sql + " t_phone_gold = " + t_phone_gold + ",";
 
@@ -1947,5 +1970,116 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 			e.printStackTrace();
 			logger.error("修改获取主播收费设置", e);
 		}
+	}
+
+	/*
+	 * 
+	 * 提现接口 wei*/
+	@Override
+	public synchronized MessageUtil tiXian(int userId, String push_connent) {
+		try {
+			logger.info("t_id:" + userId);
+			logger.info("push_connent:" + push_connent); 
+			String qSql = "SELECT t_id FROM t_put_forward_data WHERE t_user_id = ? ";
+			List<Map<String, Object>> userData = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql, userId);
+
+/*			 String qSql = "SELECT t_id FROM t_put_forward_data WHERE t_id = ? ";
+				List<Map<String, Object>> userData = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql,
+						putForwardId);*/
+			if (null == userData || userData.isEmpty()) {
+				return new MessageUtil(1, "暂未绑定微信或支付宝账号或银行卡资料.");
+			}
+
+			// 查询用户当天是否已经提现了
+			qSql = "SELECT DATE_FORMAT(t_create_time,'%Y-%m-%d') AS putdate FROM t_put_forward  WHERE t_user_id = ?  ORDER BY t_id DESC  LIMIT 1 ";
+
+			List<Map<String, Object>> putTime = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql, userId);
+
+			if (!putTime.isEmpty() && putTime.get(0).get("putdate").toString()
+					.equals(DateUtils.format(new Date(), DateUtils.defaultDatePattern))) {
+				return new MessageUtil(1, "每天每位用户仅限提现一次!");
+			}
+
+			String sql = "SELECT t_profit_money,t_share_money FROM t_balance WHERE t_user_id = ? ";
+
+			Map<String, Object> balance = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(sql, userId);
+
+//			String sqldataId = "SELECT t_id,t_gold,t_money FROM t_set_meal WHERE t_project_type = 2 AND  t_end_type = ? AND t_is_enable = 0 ORDER BY t_money ASC ";
+			String sqldataId = "SELECT t_id,t_gold,t_money FROM t_set_meal WHERE t_project_type = 2 AND  t_end_type = ? AND t_is_enable = 0 ORDER BY t_money desc ";
+
+			List<Map<String, Object>> findBySQLTOMap = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(sqldataId,
+					0);
+		if(findBySQLTOMap.size()>0){
+			int dataId = Integer.valueOf(findBySQLTOMap.get(0).get("t_id").toString());
+			
+			// 查询要体现的金额  putForwardId 是t_id
+//			Map<String, Object> queryPutforwardData = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(" SELECT t_gold,t_money FROM t_set_meal  WHERE t_id = ?", dataId);
+			Map<String, Object> queryPutforwardData = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(" SELECT t_gold,t_money FROM t_set_meal  WHERE t_id = ?",dataId );
+
+			// 收入的金币
+			BigDecimal t_profit_money = new BigDecimal(balance.get("t_profit_money").toString());
+			// 分享金币
+			BigDecimal t_share_money = new BigDecimal(balance.get("t_share_money").toString());
+
+			BigDecimal total = t_profit_money.add(t_share_money).setScale(2, BigDecimal.ROUND_DOWN);
+			// 收入的金币减去分享的金币 小于零就是金币不足 账号剩余金币
+
+			// 提现金币
+			BigDecimal t_gold = new BigDecimal(queryPutforwardData.get("t_gold").toString());
+
+			if (total.compareTo(t_gold) < 0) {
+
+				mu = new MessageUtil(1, "金币不足!");
+				return mu;
+			}
+			// 计算 扣除金币
+			if (t_profit_money.compareTo(t_gold) > -1) {
+				sql = " update t_balance set t_profit_money = ? WHERE t_user_id = ?";
+				this.getFinalDao().getIEntitySQLDAO().executeSQL(sql,
+						t_profit_money.subtract(t_gold).setScale(2, BigDecimal.ROUND_DOWN), userId);
+
+			} else {
+				sql = " update t_balance set t_profit_money = 0,t_share_money = ? WHERE t_user_id = ?";
+				this.getFinalDao().getIEntitySQLDAO().executeSQL(sql,
+						total.subtract(t_gold).setScale(2, BigDecimal.ROUND_DOWN), userId);
+
+			}
+
+			String orderNo = "tx" + userId + "" + System.currentTimeMillis();
+
+			// 新增提现记录
+			sql = "INSERT INTO t_put_forward (t_user_id, t_order_no, t_money, t_setmeal_id, t_create_time,t_order_state, t_income_gold, t_share_gold, t_data_id) VALUES (?,?,?,?,?,?,?,?,?) ";
+			this.getFinalDao().getIEntitySQLDAO().executeSQL(sql, userId, orderNo, queryPutforwardData.get("t_money"),
+					dataId, DateUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"), 0,
+					t_profit_money.compareTo(t_gold) > -1 ? t_gold : t_profit_money,
+					t_profit_money.compareTo(t_gold) > -1 ? 0
+							: t_gold.subtract(t_profit_money).setScale(2, BigDecimal.ROUND_DOWN),
+//					putForwardId);
+							userData.get(0).get("t_id"));
+
+			sql = "SELECT t_id FROM t_put_forward WHERE t_order_no = ? AND t_user_id = ? ";
+
+			Map<String, Object> map = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(sql, orderNo,
+					userId);
+
+			// 存储变动记录
+			sql = "INSERT INTO t_wallet_detail ( t_user_id, t_change_type, t_change_category, t_change_front, t_value, t_change_after, t_change_time ,t_sorece_id )"
+					+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?);";
+
+			this.getFinalDao().getIEntitySQLDAO().executeSQL(sql, userId, WalletDetail.CHANGE_TYPE_PAY,
+					WalletDetail.CHANGE_CATEGOR_PUT_FORWARD, total, t_gold,
+					total.subtract(t_gold).setScale(2, BigDecimal.ROUND_DOWN),
+					DateUtils.format(new Date(), DateUtils.FullDatePattern), map.get("t_id"));
+
+			mu = new MessageUtil(1, "申请成功!");
+		}else{
+			mu = new MessageUtil(1, "申请失败!");
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("提现异常!");
+		}
+		return mu;
 	}
 }

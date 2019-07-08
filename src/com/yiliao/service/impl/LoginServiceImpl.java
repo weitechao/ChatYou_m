@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.yiliao.service.LoginService;
@@ -15,7 +16,6 @@ import com.yiliao.util.MessageUtil;
 
 @Service("loginRoomService")
 public class LoginServiceImpl extends ICommServiceImpl implements LoginService {
-	
 	private MessageUtil mu = null;
 	 
 	/**
@@ -32,6 +32,8 @@ public class LoginServiceImpl extends ICommServiceImpl implements LoginService {
 		loginSql.append("UNION ");
 		loginSql.append("SELECT l.t_role_id,l.t_id,l.t_user_id ");
 		loginSql.append("FROM t_spread_login l WHERE l.t_user_name = ? AND l.t_pass_word = ? AND t_is_disable = 0 ");
+		
+		logger.info("查询账号密码sql:"+loginSql.toString());
 		 
 		List<Map<String, Object>> roleId = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(loginSql.toString(),userName,Md5Util.encodeByMD5(password),userName,Md5Util.encodeByMD5(password));
 		
@@ -44,12 +46,20 @@ public class LoginServiceImpl extends ICommServiceImpl implements LoginService {
 			request.getSession().setAttribute("roleId", roleId.get(0).get("t_role_id"));
 			request.getSession().setAttribute("loginId", roleId.get(0).get("t_id"));
 			
+			logger.info("loginName:"+userName);
+			logger.info("roleId:"+roleId.get(0).get("t_role_id"));
+			logger.info("loginId:"+roleId.get(0).get("t_id"));
+			logger.info("t_user_id:"+roleId.get(0).get("t_user_id"));
+			
 			Stream<Map<String,Object>> stream = roleId.stream().filter(s ->0 != Integer.parseInt(s.get("t_user_id").toString()));
 			
 			if(stream.count() > 0) {
 				request.getSession().setAttribute("roleId", roleId.get(0).get("t_role_id"));
 				request.getSession().setAttribute("spreadLog", roleId.get(0));
 				request.getSession().setAttribute("spread_role_id", roleId.get(0).get("t_role_id"));
+				
+				logger.info("spreadLog:"+roleId.get(0));
+				logger.info("spread_role_id:"+roleId.get(0).get("t_role_id"));
 				
 				logger.info("用户编号-->{}",roleId.get(0).get("t_user_id"));
 				//根据用户编号来得到当前登陆用户是几级分销商
@@ -66,12 +76,14 @@ public class LoginServiceImpl extends ICommServiceImpl implements LoginService {
 			
 			String roSql = "SELECT m.t_id,m.t_menu_name,m.t_menu_url,m.t_icon FROM t_menu m LEFT JOIN  t_authority a ON a.t_menu_id = m.t_id WHERE a.t_role_id =? AND t_father_id = ?";
 			
+			logger.info("roSql:"+roSql);
 			List<Map<String, Object>> menuMap = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(roSql, roleId.get(0).get("t_role_id"),0);
 
 			StringBuffer menu = new StringBuffer();
 			
 			for(Map<String, Object> m : menuMap){
 				//表示存在子菜单
+				logger.info("t_menu_url:"+m.get("t_menu_url"));
 				if("#".equals(m.get("t_menu_url"))){
 					menu.append("<li class=\"has-subnav\">");
 					menu.append("<a href=\"javascript:;\">");
@@ -115,6 +127,7 @@ public class LoginServiceImpl extends ICommServiceImpl implements LoginService {
 				
 			}
 			
+			logger.info("menuToString:"+menu.toString());
 			request.getSession().setAttribute("menu", menu.toString());
 			
 			mu.setM_istatus(1);

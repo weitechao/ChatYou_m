@@ -46,7 +46,8 @@
 	                      <option value="3">免费主播</option>
 					</select>
 					<button class="btn btn-default" style="float: left;">条件:</button>
-				 	<input type="text" class="form-control" id="condition" style="height: 36px; float: left;width: 200px;margin-right: 2%"  placeholder="请输入手机号或者昵称">
+				 	<input type="text" class="form-control" id="condition" style="height: 36px; float: left;width: 200px;margin-right: 2%"  placeholder="请输入IDCARD或手机号或者昵称">
+			      
 			        <span class="btn btn-default" style="float: left;">开始日期:</span>
 					<div class="input-group" style="width: 200px;float: left;margin-right: 20px;">
 					    <input type="text" class="form-control" id="beginTime" style="height: 36px;">
@@ -390,10 +391,67 @@
 						</button>
 					</div>
 				</div>
-				<!-- /.modal-content -->
 			</div>
-			<!-- /.modal -->
 		</div>
+		
+		<!-- 提现（Modal） -->
+		<div class="modal fade" id="tiXianModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 35%;">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color: #87CEFA;">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">
+						  <span class="glyphicon glyphicon-phone"></span> 提现
+						</h4>
+					</div>
+					<div class="modal-body">
+					<input type="hidden" id="tixian_user_id">
+						<div style="height: 40px;">
+							<label class="col-md-2 control-label">用户昵称:</label>
+							<div class="col-md-7">
+								<div class="input-group">
+									<span class="input-group-addon"> <i
+										class="glyphicon glyphicon-user"></i>
+									</span> <input type="text" id="tixian_nick" 
+										class="form-control1" disabled="disabled" placeholder="">
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<p class="help-block" style="color: red;">*</p>
+							</div>
+						</div>
+						<br/>
+						<div style="height: 40px;">
+							<label class="col-md-2 control-label">提现备注:</label>
+							<div class="col-md-7">
+								<div class="input-group">
+									<span class="input-group-addon"> <i
+										class="glyphicon glyphicon-font"></i>
+									</span> <textarea id="tixian_connent" class="form-control" rows="3"
+									 placeholder="Enter ..." onfocus="on_focus('tixian_connent', '请输入备注!')"
+										onblur="on_blur('tixian_connent')"></textarea>
+								</div>
+							</div>
+							<div class="col-sm-3" id="tixian_connent_validate">
+								<p class="help-block" style="color: red;">*</p>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span>关闭
+						</button>
+						<button type="button" class="btn btn-primary" onclick="on_click_tixian_msg();">
+							<span class="glyphicon glyphicon-floppy-disk"></span>提交
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<!-- 赠送金币 -->
 		<div class="modal fade" id="giveModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">

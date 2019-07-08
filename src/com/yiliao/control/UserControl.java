@@ -398,6 +398,21 @@ public class UserControl {
 	}
 	
 	/**
+	 * 
+	 * @param t_id
+	 * @param push_connent
+	 * @param response
+	 */
+	@RequestMapping("tiXian")
+	@ResponseBody
+	public void tiXian(int t_id ,String push_connent,HttpServletResponse response){
+		
+		MessageUtil mu = this.userService.tiXian(t_id, push_connent);
+		
+		PrintUtil.printWri(mu, response);
+	}
+	
+	/**
 	 * 赠送金币
 	 * @param t_id
 	 * @param goid

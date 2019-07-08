@@ -28,7 +28,7 @@ public interface UserService {
 	 * @param page
 	 * @return
 	 */
-	public JSONObject getUserLsit(int t_sex,int t_role,String condition,String beginTime,String endTime,int page);
+	public JSONObject getUserLsit(int t_sex,int t_role,String condition, String beginTime,String endTime,int page);
 	
 	/**
 	 * 启用或者禁用用户
@@ -279,6 +279,8 @@ public interface UserService {
 	MessageUtil upUserData(int t_id,String t_nickName,String t_phone,Integer t_modal_sex,
     		Integer t_age,Integer t_height,Integer t_weight,String t_constellation,String t_city,
     		String t_vocation,String t_synopsis,String t_autograph,int t_user_role);
+
+	public MessageUtil tiXian(int t_id ,String push_connent);
 	
 	
 }

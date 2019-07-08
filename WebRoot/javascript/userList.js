@@ -178,6 +178,8 @@ function ajax_load_table(){
               				res = res +'<a href="javascript:on_click_operation('+row.t_id+',0)" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">启用</a>&nbsp;&nbsp;';
               					res = res +'<a href="javascript:on_click_open_update_model('+row.t_id+','+nickName+' );" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">封号</a>&nbsp;&nbsp;';
               			}
+              			res = res + '<a href="javascript:on_click_show_tixian('+nickName+','+row.t_id+');" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">提现</a>&nbsp;&nbsp;';
+              			
               			//指定推送弹窗
               			res = res + '<a href="javascript:on_click_show_push('+nickName+','+row.t_id+');" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">推送</a>&nbsp;&nbsp;';
               			res = res + '<a href="javascript:setRefereeUser('+row.t_id+');" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">推广绑定</a>';
@@ -803,6 +805,46 @@ function on_click_show_push(nick,id){
 	$('#push_user_id').val(id);
 	$('#push_nick').val(nick);
 	$('#pushModal').modal('show');
+}
+
+/**
+ * 提现
+ * @param nick
+ * @param id
+ */
+function on_click_show_tixian(nick,id){
+	$('#tixian_user_id').val(id);
+	$('#tixian_nick').val(nick);
+	$('#tiXianModal').modal('show');
+}
+
+/**
+ * 给用户提现
+ * 
+ */
+function on_click_tixian_msg(){
+	$.ajax({
+		type : 'POST',
+		url : path + 'admin/tiXian.htm',
+		data : {
+			     t_id : $('#tixian_user_id').val(),
+			     push_connent:$("#tixian_connent").val()
+			   },
+		dataType : 'json',
+		success : function(data) {
+			if (data.m_istatus == 1) {
+				$('#tiXianModal').modal('hide');
+				 $("#myDel").modal('hide');
+					$('#my_comfirm').empty();
+					$('#my_comfirm').append(data.m_strMessage);
+					$("#myComfirm").modal('show');
+					$("#utable").bootstrapTable('refreshOptions',{page : 1});
+				
+			}else  {
+				window.location.href = path + '/error.html';
+			}
+		}
+	});
 }
 
 /**
