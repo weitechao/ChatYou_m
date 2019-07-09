@@ -27,9 +27,9 @@ public class RecharageControl {
 	
 	@RequestMapping("getRecharageList")
 	@ResponseBody
-	public void getRecharageList(int type,int t_gold_type,int t_payment_type, int t_order_state, String beginTime,String endTime,int page,HttpServletResponse response){
+	public void getRecharageList(int type,int t_payment_type, int t_order_state, String beginTime,String endTime,int page,HttpServletResponse response){
 		
-		JSONObject json = this.recharageService.getRecharageList(type, t_gold_type ,t_payment_type, t_order_state, beginTime, endTime, page);
+		JSONObject json = this.recharageService.getRecharageList(type ,t_payment_type, t_order_state, beginTime, endTime, page);
 		
 		PrintUtil.printWri(json, response);
 	}
@@ -41,9 +41,9 @@ public class RecharageControl {
 	 */
 	@RequestMapping("getTotalMoney")
 	@ResponseBody
-	public void getTotalMoney(int type,int t_gold_type,int t_payment_type, int t_order_state, String beginTime,String endTime,HttpServletResponse response){
+	public void getTotalMoney(int type,int t_payment_type, int t_order_state, String beginTime,String endTime,HttpServletResponse response){
 		
-		MessageUtil mu = this.recharageService.getTotalMoney(type, t_gold_type,t_payment_type,t_order_state, beginTime, endTime);
+		MessageUtil mu = this.recharageService.getTotalMoney(type,t_payment_type,t_order_state, beginTime, endTime);
 		
 		PrintUtil.printWri(mu, response);
 	}

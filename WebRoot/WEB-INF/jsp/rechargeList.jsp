@@ -37,12 +37,6 @@
 	                      <option value="0">VIP充值</option>
 	                      <option value="1">金币充值</option>
 					</select>
-					 <button class="btn btn-default" style="float: left;">币种:</button>
-				    <select id="search_gold_type"  style="width: 200px;float: left;margin-right: 20px;height: 36px;" onchange="on_end_change();" class="form-control">
-	                      <option value="0">全部类型</option>
-	                      <option value="1">人民币</option>
-	                      <option value="2">新台币</option>
-					</select>
 					 <button class="btn btn-default" style="float: left;">支付类型:</button>
 				    <select id="search_pay_type"  style="width: 200px;float: left;margin-right: 20px;height: 36px;" onchange="on_pay_change();" class="form-control">
 	                      <option value="-1">全部类型</option>

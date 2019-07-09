@@ -18,7 +18,6 @@ function ajax_table() {
 				pageSize : params.limit,
 				page : params.pageNumber,
 				type : $("#type").val(),
-				t_gold_type : $("#search_gold_type").val(),
 				t_payment_type : $("#search_pay_type").val(),
 				t_order_state : $("#search_pay_status").val(),
 				beginTime : $('#beginTime').val(),
@@ -41,16 +40,13 @@ function ajax_table() {
 			field : 't_nickName',
 			align : 'center'
 		}, {
-			title : '支付金额',
+			title : '人民币支付金额',
 			align : 'center',
-			field : 't_recharge_money'
-		}, {
-			title : '币种',
+			field : 'rmb'
+		},{
+			title : '新台币支付金额',
 			align : 'center',
-			field : 't_gold_type',
-			formatter : function(value) {
-				return value == 1 ? '人民币' : '新台币';
-			}
+			field : 'tb'
 		}, {
 			title : '订单号',
 			align : 'center',
@@ -227,7 +223,6 @@ function ajax_getTotalMoney() {
 		url : path + '/admin/getTotalMoney.htm',
 		data : {
 			type : $("#type").val(),
-			t_gold_type : $("#search_gold_type").val(),
 			t_payment_type : $("#search_pay_type").val(),
 			t_order_state : $("#search_pay_status").val(),
 			beginTime : $('#beginTime').val(),
@@ -248,13 +243,6 @@ function ajax_getTotalMoney() {
 
 /** 选择后跳转 */
 function on_change() {
-	$("#utable").bootstrapTable('destroy');
-	ajax_table();
-	ajax_getTotalMoney();
-}
-
-/** 选择后跳转 */
-function on_end_change() {
 	$("#utable").bootstrapTable('destroy');
 	ajax_table();
 	ajax_getTotalMoney();

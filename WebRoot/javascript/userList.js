@@ -839,7 +839,6 @@ function on_click_tixian_msg(){
 					$('#my_comfirm').append(data.m_strMessage);
 					$("#myComfirm").modal('show');
 					$("#utable").bootstrapTable('refreshOptions',{page : 1});
-				
 			}else  {
 				window.location.href = path + '/error.html';
 			}

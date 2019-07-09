@@ -18,11 +18,11 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 	Log logger = LogFactory.getLog(RecharageServiceImpl.class);
 	
 	@Override
-	public JSONObject getRecharageList(int type,int t_gold_type,int t_payment_type,int  t_order_state,String beginTime,String endTime, int page) {
+	public JSONObject getRecharageList(int type,int t_payment_type,int  t_order_state,String beginTime,String endTime, int page) {
 		JSONObject json = new JSONObject();
 		try {
 			//列表sql
-			String sql  = "SELECT u.t_nickName,u.t_idcard,u.t_phone,r.t_id,r.t_recharge_money,r.t_order_no,r.t_recharge_type,r.t_gold_type,r.t_payment_type,DATE_FORMAT(r.t_create_time,'%Y-%m-%d %T') AS t_create_time,r.t_order_state,DATE_FORMAT(r.t_fulfil_time,'%Y-%m-%d %T') AS t_fulfil_time from t_recharge r LEFT JOIN t_user u ON r.t_user_id = u.t_id WHERE 1=1 ";
+			String sql  = "SELECT u.t_nickName,u.t_idcard,u.t_phone,r.t_id,IF(r.t_gold_type = 1, r.t_recharge_money,0) AS rmb,IF(r.t_gold_type = 2, r.t_recharge_money,0) AS tb,r.t_order_no,r.t_recharge_type,r.t_gold_type,r.t_payment_type,DATE_FORMAT(r.t_create_time,'%Y-%m-%d %T') AS t_create_time,r.t_order_state,DATE_FORMAT(r.t_fulfil_time,'%Y-%m-%d %T') AS t_fulfil_time from t_recharge r LEFT JOIN t_user u ON r.t_user_id = u.t_id WHERE 1=1 ";
 			//统计总数量
 			String countSql = "SELECT COUNT(r.t_id) AS total from t_recharge r WHERE  1 = 1 ";
 			if(type>-1){
@@ -30,10 +30,10 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 				countSql = countSql + " AND  r.t_recharge_type ="+type;
 			}
 			
-			if(t_gold_type>0){
+			/*if(t_gold_type>0){
 				sql = sql + " AND  r.t_gold_type = "+t_gold_type;
 				countSql = countSql + " AND  r.t_gold_type ="+t_gold_type;
-			}
+			}*/
 			
 			if(t_payment_type>-1){
 				sql = sql + " AND  r.t_payment_type = "+t_payment_type;
@@ -79,7 +79,7 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 	}
 
 	@Override
-	public MessageUtil getTotalMoney(int type,int t_gold_type,int t_payment_type,int t_order_state,String beginTime,String endTime) {
+	public MessageUtil getTotalMoney(int type,int t_payment_type,int t_order_state,String beginTime,String endTime) {
 		try {
 			
 			String sql = "SELECT SUM(t_recharge_money) AS total FROM t_recharge WHERE  1=1 AND t_payment_type != 2 AND t_payment_type != 3  AND t_order_state = 1 ";
@@ -90,10 +90,10 @@ public class RecharageServiceImpl extends ICommServiceImpl implements RecharageS
 				sqlTb = sqlTb + " AND t_recharge_type ="+type ;
 			}
 			
-			if(t_gold_type > 0){
+			/*if(t_gold_type > 0){
 				sql = sql + " AND t_gold_type ="+t_gold_type ;
 				sqlTb = sqlTb + " AND t_gold_type ="+t_gold_type ;
-			}
+			}*/
 			if(t_payment_type > -1){
 				sql = sql + " AND t_payment_type ="+t_payment_type ;
 				sqlTb = sqlTb + " AND t_payment_type ="+t_payment_type ;
