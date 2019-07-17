@@ -63,13 +63,27 @@ var path = '${pageContext.request.contextPath}';
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-2 control-label">默认VIP折扣:</label>
+											<label class="col-md-2 control-label">默认VIP每分钟减的金币数:</label>
 											<div class="col-md-8">
 												<div class="input-group input-icon right">
 													<span class="input-group-addon">
 														<i class="glyphicon glyphicon-text-color"></i>
 													</span>
-													<input type="text" id="t_zhekou"  class="form-control1" placeholder="默认VIP折扣...." onfocus="on_focus('t_zhekou','默认VIP折扣....;')" onblur="on_blur('t_zhekou')">
+													<input type="text" id="t_zhekou"  class="form-control1" placeholder="默认VIP每分钟减的金币数...." onfocus="on_focus('t_zhekou','默认VIP每分钟减的金币数....;')" onblur="on_blur('t_zhekou')">
+												</div>
+											</div>
+											<div class="col-sm-2" id="t_default_text_validate">
+												<p class="help-block" style="color: red;">*</p>
+											</div>
+										</div>
+											<div class="form-group">
+											<label class="col-md-2 control-label">VIP最低金币数:</label>
+											<div class="col-md-8">
+												<div class="input-group input-icon right">
+													<span class="input-group-addon">
+														<i class="glyphicon glyphicon-text-color"></i>
+													</span>
+													<input type="text" id="t_zuidi"  class="form-control1" placeholder="VIP最低金币数...." onfocus="on_focus('t_zuidi','VIP最低金币数....;')" onblur="on_blur('t_zuidi')">
 												</div>
 											</div>
 											<div class="col-sm-2" id="t_default_text_validate">

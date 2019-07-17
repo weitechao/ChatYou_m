@@ -61,7 +61,20 @@ function ajax_table(type) {
 									align : 'center',
 									field : 't_type',
 									formatter : function(value) {
-										return value == 0 ? '支付宝' : '微信';
+										var res = '';
+										if(value == 0){
+											res = '支付宝';
+										}
+										if(value == 1){
+											res = '微信';
+										}
+										if(value == 3){
+											res = '银行卡';
+										}
+										//return value == 0 ? '支付宝' : '微信';  0.支付宝 1.微信 2.pepay 3.Google pay  4. iPhone 内购
+										return res;
+										
+										//return value == 0 ? '支付宝' : '微信';
 									}
 								},
 								{
@@ -113,7 +126,8 @@ function ajax_table(type) {
 									align : 'center',
 									field : 't_describe',
 									formatter : function(value) {
-										return '<span>' + value + '</span>';
+										return value == null ? '空' : value;
+										//return '<span>' + value + '</span>';
 									}
 								},
 								{
