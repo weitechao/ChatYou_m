@@ -148,7 +148,7 @@ public class SpreadServiceImpl extends ICommServiceImpl implements SpreadService
 	}
 
 	@Override
-	public JSONObject getSpreadUserList(int page, HttpServletRequest request) {
+	public JSONObject getSpreadUserList(int page, HttpServletRequest request,String loginUser) {
 		try {
 			
 			Object attribute = request.getSession().getAttribute("spreadLog");
@@ -157,12 +157,19 @@ public class SpreadServiceImpl extends ICommServiceImpl implements SpreadService
 			if(null != attribute) {
 				spreadId = JSONObject.fromObject(attribute).getInt("t_user_id");
 			}
-			
-			String qSql = "SELECT COUNT(t_id) AS total FROM t_spread_channel s WHERE t_spread_id = ? AND s.t_spread_type = 0 ";
-			Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSql, spreadId);
+
+      		String qSql = "SELECT COUNT(t_id) AS total FROM t_spread_channel  WHERE t_spread_id = '"+ spreadId +"'  AND t_spread_type = 0 ";
+      		String sqlMap ="SELECT s.*,u.t_nickName,u.t_idcard  FROM t_spread_channel s LEFT JOIN t_user u ON s.t_user_id = u.t_id WHERE s.t_spread_id =  ? AND s.t_spread_type = 0  LIMIT ?,10";
+			if(!"admin".equals(loginUser)){
+				qSql = "SELECT COUNT(s.t_id) AS total FROM t_spread_channel s  LEFT JOIN t_user u ON s.t_user_id = u.t_id WHERE s.t_spread_id ="+spreadId + "  AND s.t_spread_type = 0 and u.t_nickName='"+loginUser+"'";
+				sqlMap ="SELECT s.*,u.t_nickName,u.t_idcard  FROM t_spread_channel s LEFT JOIN t_user u ON s.t_user_id = u.t_id WHERE s.t_spread_id =  ? AND s.t_spread_type = 0 and u.t_nickName='"+loginUser+"' LIMIT ?,10";
+			}
+		System.out.println(qSql);
+		System.out.println(sqlMap);
+			Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSql);
 			
 			List<Map<String,Object>> sqltoMap = this.getFinalDao().getIEntitySQLDAO()
-					.findBySQLTOMap("SELECT s.*,u.t_nickName,u.t_idcard  FROM t_spread_channel s LEFT JOIN t_user u ON s.t_user_id = u.t_id WHERE s.t_spread_id =  ? AND s.t_spread_type = 0 LIMIT ?,10", spreadId,(page-1)*10);
+					.findBySQLTOMap(sqlMap, spreadId,(page-1)*10);
 			
 			JSONObject json = new JSONObject();
 			
@@ -190,11 +197,15 @@ public class SpreadServiceImpl extends ICommServiceImpl implements SpreadService
 			}else {
 				List<Map<String,Object>> sqltoMap = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap("SELECT t_spread_id FROM t_spread_channel WHERE t_user_id  = ? ",
 						JSONObject.fromObject(attribute).get("t_user_id"));
-				
+				if(sqltoMap.size()>0){
 				if(sqltoMap.get(0).get("t_spread_id").toString().equals("0")) {
 					mu.setM_istatus(1);
 					mu.setM_object(10021);
 				}else {
+					mu.setM_istatus(1);
+					mu.setM_object(10000);
+				}
+				}else{
 					mu.setM_istatus(1);
 					mu.setM_object(10000);
 				}
@@ -251,6 +262,8 @@ public class SpreadServiceImpl extends ICommServiceImpl implements SpreadService
 	@Override
 	public JSONObject getNextlLowerLevel(int t_spread_id, int page) {
 		try {
+			System.out.println("getNextlLowerLevel  t_spread_id="+t_spread_id);
+			
 			String cSql="SELECT count(t_id) AS total FROM t_spread_channel WHERE t_spread_id = ? ";
 			Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(cSql, t_spread_id);
 			

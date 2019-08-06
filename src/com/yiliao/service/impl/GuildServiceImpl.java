@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.yiliao.service.GuildService;
 import com.yiliao.util.DateUtils;
+import com.yiliao.util.Md5Util;
 import com.yiliao.util.MessageUtil;
 import com.yiliao.util.PushUtil;
 
@@ -92,6 +93,15 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 				String uSql = "UPDATE t_guild SET  t_guild_name=?, t_admin_name=?, t_admin_phone=?,t_extract= ?, t_examine=1  WHERE t_id = ? ";
 			    this.getFinalDao().getIEntitySQLDAO().executeSQL(uSql, t_guild_name,t_admin_name,t_admin_phone,t_extract,t_id);
 			    
+			    //增加数据库
+			    int  username = 10000+t_id;
+			    String countSql = "SELECT * FROM t_admin where t_user_name='"+username+"'";
+				Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(countSql);
+				if(total.isEmpty()||total==null){
+					   String sql = " INSERT INTO t_admin (t_user_name, t_pass_word, t_is_disable,t_role_id, t_create_time) VALUES (?, ?, ?, ?,?);";
+						this.getFinalDao().getIEntitySQLDAO().executeSQL(sql, username,
+								Md5Util.encodeByMD5("123456"),0,5,DateUtils.format(new Date(), DateUtils.FullDatePattern));
+				}
 			    mu = new MessageUtil(1, "数据已更新!");
 			    
 			    //查询公会申请人
@@ -125,7 +135,8 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 	@Override
 	public JSONObject getGuildAnchorList(int guild_id, int page) {
 		try {
-			
+			System.out.println("加载公会下的主播"+guild_id);
+			logger.info("加载公会下的主播"+guild_id);
 			String qSql = " SELECT g.t_id,u.t_idcard,u.t_nickName,gu.t_guild_name,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_anchor_guild g LEFT JOIN t_user u ON g.t_anchor_id = u.t_id LEFT JOIN t_guild gu ON g.t_guild_id = gu.t_id  WHERE g.t_guild_id = ?  ORDER BY g.t_create_time DESC LIMIT  ?,10";
 			
 			List<Map<String, Object>> dataList = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql, guild_id,(page-1)*10);

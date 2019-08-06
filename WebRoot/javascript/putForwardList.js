@@ -52,7 +52,7 @@ function ajax_table(type) {
 									}
 								},
 								{
-									title : '提现名称',
+									title : '账户名称',
 									field : 't_real_name',
 									align : 'center'
 								},
@@ -83,6 +83,30 @@ function ajax_table(type) {
 									formatter : function(value, row, index) {
 										return row.t_account_number;
 									}
+								},
+								{
+									title : '地点',
+									align : 'center',
+									field : 't_place'
+
+								},
+								{
+									title : '银行',
+									align : 'center',
+									field : 't_bank'
+
+								},
+								{
+									title : '分行',
+									align : 'center',
+									field : 't_branch_bank'
+
+								},
+								{
+									title : '备注',
+									align : 'center',
+									field : 't_remark'
+
 								},
 								{
 									title : '兑换金币(个)',

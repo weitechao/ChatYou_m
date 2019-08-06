@@ -39,7 +39,7 @@ public interface SpreadService {
 	 * @param request
 	 * @return
 	 */
-	JSONObject getSpreadUserList(int page, HttpServletRequest request);
+	JSONObject getSpreadUserList(int page, HttpServletRequest request,String loginUser);
 
 	/**
 	 * 获取当前用户是否可以添加渠道推广

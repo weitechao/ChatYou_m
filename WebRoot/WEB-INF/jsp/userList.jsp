@@ -48,6 +48,7 @@
 					<button class="btn btn-default" style="float: left;">条件:</button>
 				 	<input type="text" class="form-control" id="condition" style="height: 36px; float: left;width: 200px;margin-right: 2%"  placeholder="请输入IDCARD或手机号或者昵称">
 			      
+			      
 			        <span class="btn btn-default" style="float: left;">开始日期:</span>
 					<div class="input-group" style="width: 200px;float: left;margin-right: 20px;">
 					    <input type="text" class="form-control" id="beginTime" style="height: 36px;">

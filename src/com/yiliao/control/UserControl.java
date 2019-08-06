@@ -32,9 +32,10 @@ public class UserControl {
 
 	@RequestMapping("/getUserList")
 	@ResponseBody
-	public void getUserList(int t_sex,int t_role,String condition,String beginTime,String endTime,int page, HttpServletResponse response) {
-
-		JSONObject jsonObject = this.userService.getUserLsit(t_sex, t_role, condition, beginTime, endTime, page);
+	public void getUserList(int t_sex,int t_role,String condition,String beginTime,String endTime,int page, HttpServletRequest request,HttpServletResponse response) {
+		String loginUser = (String) request.getSession().getAttribute("loginName");
+         System.out.println("******="+loginUser);
+		JSONObject jsonObject = this.userService.getUserLsit(t_sex, t_role, condition, beginTime, endTime, page, loginUser);
 
 		PrintUtil.printWri(jsonObject, response);
 	}

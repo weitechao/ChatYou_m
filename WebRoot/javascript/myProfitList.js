@@ -32,27 +32,27 @@ $(function() {
 					align : 'center'
 				},
 				{
-					title : '金币充值(元)',
+					title : '金币充值',
 					field : 'gold',
 					align : 'center'
 				},
 				{
-					title : '金币提成(元)',
+					title : '金币提成',
 					field : 'goldMoney',
 					align : 'center'
 				},
 				{
-					title : 'VIP充值(元)',
+					title : 'VIP充值',
 					align : 'center',
 					field : 'vip'
 				},
 				{
-					title : 'VIP提成(元)',
+					title : 'VIP提成',
 					align : 'center',
 					field : 'vipMoney'
 				},
 				{
-					title : '总提成(元)',
+					title : '总提成',
 					align : 'center',
 					field : 'totalMoney'
 				}]

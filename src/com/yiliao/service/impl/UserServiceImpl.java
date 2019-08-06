@@ -212,12 +212,25 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 	 * 分页获取用户列表
 	 */
 	@Override
-	public JSONObject getUserLsit(int t_sex, int t_role, String condition, String beginTime, String endTime, int page) {
-
+	public JSONObject getUserLsit(int t_sex, int t_role, String condition, String beginTime, String endTime, int page, String loginUser) {
+		System.out.println("取用户列表登录账号="+loginUser);
+		
+		
 		JSONObject json = new JSONObject();
-
 		try {
-
+			int t_role_id =0;
+			int tId = 0;
+		//	StringBuffer sb = new StringBuffer();
+			
+			String sqlloginUser = "SELECT t_role_id FROM t_admin where t_is_disable =0 and t_user_name='"+loginUser+"' limit 1" ;
+			Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(sqlloginUser);
+			if(total!=null && !total.isEmpty()){
+			    t_role_id = Integer.valueOf(total.get("t_role_id").toString());
+			}
+			
+			System.out.println("t_role_id="+t_role_id);
+			
+			
 			String countSql = " select count(t_id) as totalCount from t_user WHERE 1=1";
 
 			StringBuffer qSql = new StringBuffer();
@@ -231,8 +244,29 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 			qSql.append(" LEFT JOIN t_user r ON u.t_referee = r.t_id ");
 			qSql.append(" LEFT JOIN t_spread s ON  s.t_user_id = u.t_id ");
 			qSql.append(" LEFT JOIN t_free_anthor f ON  f.t_user_id = u.t_id ");
+			if(t_role_id!=1){
+				qSql.append("   LEFT JOIN  t_anchor_guild g  ON g.t_anchor_id = u.t_id  ");
+				String sqluser = "SELECT t_id FROM t_user where t_idcard='"+loginUser+"' limit 1" ;
+				List<Map<String, Object>> menuList = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(sqluser);
+				if(menuList.size()>0){
+					tId  = Integer.valueOf(menuList.get(0).get("t_id")+"");
+					/*if(tId != 0){
+						//sb.append("g.t_guild_id =").append(tId);
+					}*/
+					
+				}
+			}
+			
 			qSql.append(" WHERE ");
 			qSql.append(" 1 = 1 ");
+			
+                if(t_role_id != 1){
+                    	qSql.append("and g.t_guild_id =").append(tId);
+	 		}
+
+			/*if(sb.length()>0){
+				qSql.append("and  "+sb.toString());	
+			}*/
 			// 判断性别否需要查询
 			if (t_sex != -1) {
 				countSql = countSql + " AND t_sex = " + t_sex;
@@ -270,6 +304,7 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 
 			Map<String, Object> totalCount = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(countSql);
 
+			System.out.println(qSql.toString());
 			List<Map<String, Object>> listMap = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql.toString(),
 					(page - 1) * 10);
 

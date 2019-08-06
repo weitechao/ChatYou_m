@@ -169,6 +169,115 @@ var path = '<%=basePath%>';
 			<!-- /.modal -->
 		</div>
 		
+		
+		<!-- 提现（Modal） -->
+		<div class="modal fade" id="tiXianModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 35%;">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color: #87CEFA;">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">
+						  <span class="glyphicon glyphicon-phone"></span> 提现
+						</h4>
+					</div>
+					<div class="modal-body">
+					<input type="hidden" id="tixian_user_id">
+						<div style="height: 40px;">
+							<label class="col-md-2 control-label">用户昵称:</label>
+							<div class="col-md-7">
+								<div class="input-group">
+									<span class="input-group-addon"> <i
+										class="glyphicon glyphicon-user"></i>
+									</span> <input type="text" id="tixian_nick" 
+										class="form-control1" disabled="disabled" placeholder="">
+								</div>
+							</div>
+							<div class="col-sm-1">
+								<p class="help-block" style="color: red;">*</p>
+							</div>
+						</div>
+						<br/>
+						<div style="height: 40px;">
+							<label class="col-md-2 control-label">提现备注:</label>
+							<div class="col-md-7">
+								<div class="input-group">
+									<span class="input-group-addon"> <i
+										class="glyphicon glyphicon-font"></i>
+									</span> <textarea id="tixian_connent" class="form-control" rows="3"
+									 placeholder="Enter ..." onfocus="on_focus('tixian_connent', '请输入备注!')"
+										onblur="on_blur('tixian_connent')"></textarea>
+								</div>
+							</div>
+							<div class="col-sm-3" id="tixian_connent_validate">
+								<p class="help-block" style="color: red;">*</p>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span>关闭
+						</button>
+						<button type="button" class="btn btn-primary" onclick="on_click_tixian_msg();">
+							<span class="glyphicon glyphicon-floppy-disk"></span>提交
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<!-- 财务明细 -->
+<div class="modal fade" id="user_money" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width: 56%;">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #87CEFA;">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title">
+				  <span class="glyphicon glyphicon-picture"></span> 财务相关
+				</h4>
+				<input type="hidden" id="userId">
+			</div>
+			</br>
+			<div class="form-group" style="height: 40px;">
+				<label class="col-md-2 control-label" style="margin-top: 10px;margin-left: 10px;">用户余额:</label>
+				<div class="col-md-8">
+					<div class="input-group">
+						<span class="input-group-addon"> <i
+							class="glyphicon glyphicon-user"></i>
+						</span> 
+						  <input type="text" id = "totalMoney"  class="form-control1" disabled="disabled" value="500金币">
+					</div>
+				</div>
+			</div>
+			</br>
+			<a class="btn btn-default" href="javascript:on_click_switch(-1);" style="background-color: #2ec9de;margin-left: 10px;">全部明细</a>
+			 <a class="btn btn-default"         
+				style="float: right;background-color: #87CEFA;margin-right: 12px;" href="javascript:on_click_switch(0);">收入明细</a>
+				
+		     <a class="btn btn-default"         
+				style="float: right;background-color: #87CEFA;margin-right: 10px;" href="javascript:on_click_switch(1);">支出明细</a>
+			<div class="agile-tables">
+				<div class="w3l-table-info">
+					<table id="tinancialdetails" class="table table-hover" style="width: 98%;margin-left: 10px;"></table>
+				</div>
+		    </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: #87CEFA;">
+					<span class="glyphicon glyphicon-remove"></span>关闭
+				</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+</div>
+
+		
 		<!-- 添加主播（Modal） -->
 		<div class="modal fade" style="z-index: 1500" id="anchor_join_Modal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">

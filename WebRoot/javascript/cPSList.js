@@ -53,12 +53,12 @@ function ajax_load_table() {
 									field : 't_proportions'
 								},
 								{
-									title : '总分成(元)',
+									title : '总分成',
 									align : 'center',
 									field : 'totalVale'
 								},
 								{
-									title : '已结算(元)',
+									title : '已结算',
 									align : 'center',
 									field : 'already',
 									formatter:function(value,row){
@@ -66,7 +66,7 @@ function ajax_load_table() {
 									}
 								},
 								{
-									title : '剩余分成(元)',
+									title : '剩余分成',
 									align : 'center',
 									field : 'balance'
 								},

@@ -34,7 +34,7 @@ public class PutForwardServiceImpl extends ICommServiceImpl implements PutForwar
 
 		try {
 
-			String sql = " SELECT f.t_id,f.t_user_id,u.t_nickName,u.t_idcard,u.t_disable,d.t_nick_name,d.t_real_name,d.t_type,d.t_account_number,f.t_money,f.t_order_state,f.t_describe,f.t_share_gold+f.t_income_gold AS gold,DATE_FORMAT(f.t_create_time,'%Y-%m-%d %T') AS t_create_time,s.t_gold,s.t_money AS amount,DATE_FORMAT(f.t_handle_time,'%Y-%m-%d %T') AS t_handle_time FROM t_put_forward f  LEFT JOIN t_put_forward_data d ON f.t_data_id = d.t_id LEFT JOIN t_set_meal s ON f.t_setmeal_id = s.t_id LEFT JOIN t_user u ON f.t_user_id=u.t_id WHERE 1=1 ";
+			String sql = " SELECT f.t_id,f.t_user_id,u.t_nickName,u.t_idcard,u.t_disable,d.t_nick_name,d.t_real_name,d.t_type,d.t_account_number,d.t_place,d.t_bank,d.t_remark,d.t_branch_bank,f.t_money,f.t_order_state,f.t_describe,f.t_share_gold+f.t_income_gold AS gold,DATE_FORMAT(f.t_create_time,'%Y-%m-%d %T') AS t_create_time,s.t_gold,s.t_money AS amount,DATE_FORMAT(f.t_handle_time,'%Y-%m-%d %T') AS t_handle_time FROM t_put_forward f  LEFT JOIN t_put_forward_data d ON f.t_data_id = d.t_id LEFT JOIN t_set_meal s ON f.t_setmeal_id = s.t_id LEFT JOIN t_user u ON f.t_user_id=u.t_id WHERE 1=1 ";
 			// 统计
 			String countSql = "SELECT count(*) AS total FROM t_put_forward f WHERE 1=1 ";
 			// 查询条件

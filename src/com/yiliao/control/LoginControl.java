@@ -45,7 +45,6 @@ public class LoginControl{
 	 */
 	@RequestMapping(value="login")
 	public ModelAndView login(String userName,String password,HttpServletRequest request,ModelAndView model){
-		
 		request.getSession().removeAttribute("logerr");
 		MessageUtil mu = loginRoomService.login(userName,password,request);
 		if(mu.getM_istatus() ==1){

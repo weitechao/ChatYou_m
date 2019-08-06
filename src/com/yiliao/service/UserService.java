@@ -28,7 +28,7 @@ public interface UserService {
 	 * @param page
 	 * @return
 	 */
-	public JSONObject getUserLsit(int t_sex,int t_role,String condition, String beginTime,String endTime,int page);
+	public JSONObject getUserLsit(int t_sex,int t_role,String condition, String beginTime,String endTime,int page,String loginUser);
 	
 	/**
 	 * 启用或者禁用用户

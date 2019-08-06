@@ -76,8 +76,9 @@ public class SpreadControl {
 	@RequestMapping("getSpreadChannelList")
 	@ResponseBody
 	public void getSpreadUserList(int page,HttpServletRequest request,HttpServletResponse response) {
+		String loginUser = (String) request.getSession().getAttribute("loginName");
 		
-		JSONObject mu = this.spreadService.getSpreadUserList(page, request);
+		JSONObject mu = this.spreadService.getSpreadUserList(page, request, loginUser);
 		
 		PrintUtil.printWri(mu, response);
 	}
