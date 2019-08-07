@@ -115,11 +115,11 @@ function ajax_load_table() {
 													+ '<a href="javascript:on_click_show_tixian('
 													+ nickName
 													+ ','
-													+ row.t_id
+													+ row.id
 													+ ');" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">提现</a>&nbsp;&nbsp;';
 											res = res
 													+ '<a class="btn btn-default" href="javascript:on_click_finance_popup('
-													+ row.t_id
+													+ row.id
 													+ ');" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">财务</a>&nbsp;&nbsp;';
 											return res += '<a href="javascript:guild_lower_frame('
 													+ row.t_id
@@ -516,11 +516,11 @@ function on_load_anchor_list(id) {
 										var res = '<a href="javascript:on_click_show_tixian('
 											+ nickName
 											+ ','
-											+ row.t_id
+											+ row.id
 											+ ');" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">提现</a>&nbsp;&nbsp;';
 									res = res
 											+ '<a class="btn btn-default" href="javascript:on_click_finance_popup('
-											+ row.t_id
+											+ row.id
 											+ ');" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">财务</a>&nbsp;&nbsp;';
 									
 									res = res

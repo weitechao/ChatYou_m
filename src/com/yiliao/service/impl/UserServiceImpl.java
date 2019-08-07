@@ -728,6 +728,9 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 
 	@Override
 	public JSONObject getUserFinancialDetails(int userId, int type, int page) {
+		
+		System.out.println("getUserFinancialDetails userId="+userId);
+		System.out.println("getUserFinancialDetails type="+type);
 
 		JSONObject json = new JSONObject();
 

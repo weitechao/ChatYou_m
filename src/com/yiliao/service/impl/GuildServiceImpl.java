@@ -42,7 +42,7 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 			Map<String, Object> totalMap = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(cSql);
 			System.out.println("cSql="+cSql);
 			//查询列表
-			String qSql = " SELECT g.t_id,g.t_anchor_number,g.t_guild_name,u.t_nickName,g.t_admin_name,g.t_admin_phone,g.t_extract,g.t_examine,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_guild g  ";
+			String qSql = " SELECT u.t_id AS id,g.t_id,g.t_anchor_number,g.t_guild_name,u.t_nickName,g.t_admin_name,g.t_admin_phone,g.t_extract,g.t_examine,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_guild g  ";
 			qSql = qSql + " LEFT JOIN t_user u ON g.t_user_id=u.t_id WHERE 1 = 1 AND t_examine != 2 ";
 			if(StringUtils.isNotBlank(guildName)){
 				qSql = qSql + " AND g.t_guild_name LIKE '%"+guildName+"%' ";
@@ -171,7 +171,7 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 		try {
 			System.out.println("加载公会下的主播"+guild_id);
 			logger.info("加载公会下的主播"+guild_id);
-			String qSql = " SELECT g.t_id,u.t_idcard,u.t_nickName,gu.t_guild_name,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_anchor_guild g LEFT JOIN t_user u ON g.t_anchor_id = u.t_id LEFT JOIN t_guild gu ON g.t_guild_id = gu.t_id  WHERE g.t_guild_id = ?  ORDER BY g.t_create_time DESC LIMIT  ?,10";
+			String qSql = " SELECT   u.t_id AS id,g.t_id,u.t_idcard,u.t_nickName,gu.t_guild_name,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_anchor_guild g LEFT JOIN t_user u ON g.t_anchor_id = u.t_id LEFT JOIN t_guild gu ON g.t_guild_id = gu.t_id  WHERE g.t_guild_id = ?  ORDER BY g.t_create_time DESC LIMIT  ?,10";
 			
 			List<Map<String, Object>> dataList = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql, guild_id,(page-1)*10);
 			
