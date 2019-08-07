@@ -52,11 +52,6 @@ function ajax_table(type) {
 									}
 								},
 								{
-									title : '账户名称',
-									field : 't_real_name',
-									align : 'center'
-								},
-								{
 									title : '提现方式',
 									align : 'center',
 									field : 't_type',
@@ -78,28 +73,34 @@ function ajax_table(type) {
 									}
 								},
 								{
-									title : '提现账号',
+									title : '账户名称',
+									field : 't_real_name',
+									align : 'center'
+								},
+								
+								{
+									title : '银行账号',
 									align : 'center',
 									formatter : function(value, row, index) {
 										return row.t_account_number;
 									}
 								},
 								{
-									title : '地点',
-									align : 'center',
-									field : 't_place'
-
-								},
-								{
-									title : '银行',
+									title : '银行名称',
 									align : 'center',
 									field : 't_bank'
 
 								},
 								{
-									title : '分行',
+									title : '分行名称',
 									align : 'center',
 									field : 't_branch_bank'
+
+								},
+								{
+									title : '银行地点',
+									align : 'center',
+									field : 't_place'
 
 								},
 								{

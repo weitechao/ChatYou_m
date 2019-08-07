@@ -12,7 +12,7 @@ public interface GuildService {
 	 * @param page
 	 * @return
 	 */
-	public JSONObject getGuildList(String guildName,int page);
+	public JSONObject getGuildList(String guildName,int page,String loginUser);
 	
 	/**
 	 * 修改公会状态

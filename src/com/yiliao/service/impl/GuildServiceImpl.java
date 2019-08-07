@@ -19,29 +19,47 @@ import com.yiliao.util.PushUtil;
 public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 
 	@Override
-	public JSONObject getGuildList(String guildName, int page) {
+	public JSONObject getGuildList(String guildName, int page, String loginUser) {
 		try {
+			Integer tUserId = 0;
+			if(!"admin".equals(loginUser)){
+				 String qSqlCard = " SELECT t_id FROM t_user WHERE t_idcard = ? ";
+				    Map<String, Object> userMapCard = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSqlCard, loginUser);
+				     tUserId = Integer.valueOf(userMapCard.get("t_id")+"");
+			}
+			  
+			    
+			    
 			String cSql = " SELECT COUNT(t_id) AS total FROM t_guild WHERE 1=1 AND t_examine != 2 ";
+			 if(tUserId!=0){
+				 cSql = " SELECT COUNT(t_id) AS total FROM t_guild WHERE 1=1 AND t_examine != 2 and t_user_id="+tUserId;
+			 }
 			
 			if(StringUtils.isNotBlank(guildName)){
 				cSql = cSql + "AND t_guild_name LIKE '%"+guildName+"%' ";
 			}
 			
 			Map<String, Object> totalMap = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(cSql);
-			
+			System.out.println("cSql="+cSql);
 			//查询列表
 			String qSql = " SELECT g.t_id,g.t_anchor_number,g.t_guild_name,u.t_nickName,g.t_admin_name,g.t_admin_phone,g.t_extract,g.t_examine,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_guild g  ";
 			qSql = qSql + " LEFT JOIN t_user u ON g.t_user_id=u.t_id WHERE 1 = 1 AND t_examine != 2 ";
 			if(StringUtils.isNotBlank(guildName)){
 				qSql = qSql + " AND g.t_guild_name LIKE '%"+guildName+"%' ";
 			}
+			 if(tUserId!=0){
+				 qSql = qSql + " AND g.t_user_id="+tUserId;
+			 }
 			
 			qSql = qSql + " ORDER BY g.t_create_time DESC LIMIT ?,10 ";
 			
+			System.out.println("qSql="+qSql);
 			
 			List<Map<String, Object>> dataMap = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(qSql, (page-1)*10);
 			
 			qSql = "SELECT COUNT(t_id) AS anchorNumber  FROM t_anchor_guild WHERE t_guild_id= ?";
+			
+			System.out.println("qSql="+qSql);
 			
 			for(Map<String, Object> m : dataMap){
 				
@@ -93,15 +111,31 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 				String uSql = "UPDATE t_guild SET  t_guild_name=?, t_admin_name=?, t_admin_phone=?,t_extract= ?, t_examine=1  WHERE t_id = ? ";
 			    this.getFinalDao().getIEntitySQLDAO().executeSQL(uSql, t_guild_name,t_admin_name,t_admin_phone,t_extract,t_id);
 			    
+			    String qSqlSs = " SELECT t_user_id FROM t_guild WHERE t_id = ? ";
+			    Map<String, Object> userMapSs = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSqlSs, t_id);
+			    
+			    int t_user_id = Integer.valueOf(userMapSs.get("t_user_id").toString());
+			    
+			    String qSqlCard = " SELECT t_idcard FROM t_user WHERE t_id = ? ";
+			    Map<String, Object> userMapCard = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSqlCard, t_user_id);
+			    
+			    
+			    
 			    //增加数据库
-			    int  username = 10000+t_id;
+			    String username = userMapCard.get("t_idcard").toString();
+			    System.out.println("username="+username);
+			    if(username.length()>0 && username != null){
 			    String countSql = "SELECT * FROM t_admin where t_user_name='"+username+"'";
-				Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(countSql);
-				if(total.isEmpty()||total==null){
+			    List<Map<String, Object>> dataList = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(countSql);
+				if(dataList.size()<=0){
+					System.out.println("增加账户");
 					   String sql = " INSERT INTO t_admin (t_user_name, t_pass_word, t_is_disable,t_role_id, t_create_time) VALUES (?, ?, ?, ?,?);";
 						this.getFinalDao().getIEntitySQLDAO().executeSQL(sql, username,
 								Md5Util.encodeByMD5("123456"),0,5,DateUtils.format(new Date(), DateUtils.FullDatePattern));
+				}else{
+					System.out.println("查询到不增加");
 				}
+			    }
 			    mu = new MessageUtil(1, "数据已更新!");
 			    
 			    //查询公会申请人

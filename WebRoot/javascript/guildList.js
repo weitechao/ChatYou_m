@@ -509,9 +509,26 @@ function on_load_anchor_list(id) {
 									field : '',
 									align : 'center',
 									formatter : function(value, row, index) {
-										return "<a href='javascript:on_signout_guild("
+										
+										var nickName = "'"
+											+ row.t_nickName + "'";
+										
+										var res = '<a href="javascript:on_click_show_tixian('
+											+ nickName
+											+ ','
+											+ row.t_id
+											+ ');" class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">提现</a>&nbsp;&nbsp;';
+									res = res
+											+ '<a class="btn btn-default" href="javascript:on_click_finance_popup('
+											+ row.t_id
+											+ ');" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">财务</a>&nbsp;&nbsp;';
+									
+									res = res
+									+"<a href='javascript:on_signout_guild("
 												+ row.t_id
 												+ ");'  class='btn btn-default' style='height: 25px;line-height: 0.5;background-color: #87CEFA;'>退出公会</a>";
+									
+									return res;
 									}
 								} ]
 					});

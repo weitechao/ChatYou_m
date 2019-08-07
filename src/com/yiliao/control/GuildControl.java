@@ -1,5 +1,6 @@
 package com.yiliao.control;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,10 @@ public class GuildControl {
 	 */
 	@RequestMapping("getGuildList")
 	@ResponseBody
-	public void getGuildList(String guildName, int page,
+	public void getGuildList(String guildName, int page, HttpServletRequest request,
 			HttpServletResponse response) {
-
-		PrintUtil.printWri(this.guildService.getGuildList(guildName, page),
+		String loginUser = (String) request.getSession().getAttribute("loginName");
+		PrintUtil.printWri(this.guildService.getGuildList(guildName, page,loginUser),
 				response);
 	}
 
