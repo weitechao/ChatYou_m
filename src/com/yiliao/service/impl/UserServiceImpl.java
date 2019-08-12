@@ -218,17 +218,17 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 		
 		JSONObject json = new JSONObject();
 		try {
-			int t_role_id =0;
-			int tId = 0;
+			//int t_role_id =0;
+			//int tId = 0;
 		//	StringBuffer sb = new StringBuffer();
 			
-			String sqlloginUser = "SELECT t_role_id FROM t_admin where t_is_disable =0 and t_user_name='"+loginUser+"' limit 1" ;
+		/*	String sqlloginUser = "SELECT t_role_id FROM t_admin where t_is_disable =0 and t_user_name='"+loginUser+"' limit 1" ;
 			Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(sqlloginUser);
 			if(total!=null && !total.isEmpty()){
 			    t_role_id = Integer.valueOf(total.get("t_role_id").toString());
 			}
 			
-			System.out.println("t_role_id="+t_role_id);
+			System.out.println("t_role_id="+t_role_id);*/
 			
 			
 			String countSql = " select count(t_id) as totalCount from t_user WHERE 1=1";
@@ -244,25 +244,23 @@ public class UserServiceImpl extends ICommServiceImpl implements UserService {
 			qSql.append(" LEFT JOIN t_user r ON u.t_referee = r.t_id ");
 			qSql.append(" LEFT JOIN t_spread s ON  s.t_user_id = u.t_id ");
 			qSql.append(" LEFT JOIN t_free_anthor f ON  f.t_user_id = u.t_id ");
-			if(t_role_id!=1){
+		/*	if(t_role_id!=1){
 				qSql.append("   LEFT JOIN  t_anchor_guild g  ON g.t_anchor_id = u.t_id  ");
 				String sqluser = "SELECT t_id FROM t_user where t_idcard='"+loginUser+"' limit 1" ;
 				List<Map<String, Object>> menuList = this.getFinalDao().getIEntitySQLDAO().findBySQLTOMap(sqluser);
 				if(menuList.size()>0){
 					tId  = Integer.valueOf(menuList.get(0).get("t_id")+"");
-					/*if(tId != 0){
-						//sb.append("g.t_guild_id =").append(tId);
-					}*/
+					
 					
 				}
-			}
+			}*/
 			
 			qSql.append(" WHERE ");
 			qSql.append(" 1 = 1 ");
 			
-                if(t_role_id != 1){
+              /*  if(t_role_id != 1){
                     	qSql.append("and g.t_guild_id =").append(tId);
-	 		}
+	 		}*/
 
 			/*if(sb.length()>0){
 				qSql.append("and  "+sb.toString());	
