@@ -98,6 +98,8 @@ function ajax_load_table() {
 									align : 'center',
 									formatter : function(value, row, index) {
 										var valueStr = JSON.stringify(row);
+										/*loginUser*/
+										 var loginUser = "'"+row.loginUser+"'";
 										if (row.t_examine == 0) {
 											return "<a href='javascript:on_load_examineModal("
 													+ valueStr
@@ -121,9 +123,14 @@ function ajax_load_table() {
 													+ '<a class="btn btn-default" href="javascript:on_click_finance_popup('
 													+ row.id
 													+ ');" style="height: 25px;line-height: 0.5;background-color: #87CEFA;">财务</a>&nbsp;&nbsp;';
-											return res += '<a href="javascript:guild_lower_frame('
-													+ row.t_id
-													+ ');"  class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;color:red;">删除</a>';
+											
+											if(loginUser == "admin"){
+												res =res+ '<a href="javascript:guild_lower_frame('
+												+ row.t_id
+												+ ');"  class="btn btn-default" style="height: 25px;line-height: 0.5;background-color: #87CEFA;color:red;">删除</a>'
+											}
+											
+											return res;
 										} else if (row.t_examine == 2) {
 											return '<a href="javascript:on_enable_guild('
 													+ row.t_id

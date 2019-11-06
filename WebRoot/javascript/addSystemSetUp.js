@@ -24,6 +24,7 @@
 				    $('#t_nickname_filter').val(data.m_object.t_nickname_filter);
 				    $('#t_zhekou').val(data.m_object.t_zhekou);
 				    $('#t_zuidi').val(data.m_object.t_zuidi);
+				    $('#t_parameter').val(data.m_object.t_parameter);
 				} else  {
 					window.location.href = path + '/error.html';
 				}
@@ -48,6 +49,7 @@ function on_click_submit(){
 		   {'name':'t_service_qq','type':'string'},
 		   {'name':'t_zhekou','type':'int'},
 		   {'name':'t_zuidi','type':'int'},
+		   {'name':'t_parameter','type':'string'},
 		 ];
 	if($('#t_default_phone').val() == null){
 		$("#t_default_phone").css({ "border-color": "red" });
@@ -77,7 +79,8 @@ function on_click_submit(){
 				t_video_hint:$('#t_video_hint').val(),
 				t_spreed_hint:$('#t_spreed_hint').val(),
 				t_zhekou:$('#t_zhekou').val(),
-				t_zuidi:$('#t_zuidi').val()
+				t_zuidi:$('#t_zuidi').val(),
+				t_parameter:$('#t_parameter').val()
 			},
 			dataType : 'json',
 			success : function(data) {

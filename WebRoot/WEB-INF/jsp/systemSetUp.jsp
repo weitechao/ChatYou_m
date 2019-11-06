@@ -34,6 +34,25 @@ var path = '${pageContext.request.contextPath}';
 								<div class=" panel-body-inputin">
 									<form class="form-horizontal" id="myFrom" action="${pageContext.request.contextPath}/admin/saveUser.htm" method="post">
 									   <input id="t_id" type="hidden">
+										
+										
+											<div class="form-group">
+											<label class="col-md-2 control-label">APP参数:</label>
+											<div class="col-md-8">
+												<div class="input-group input-icon right">
+													<span class="input-group-addon">
+														<i class="glyphicon glyphicon-text-color"></i>
+													</span>
+													<input type="text" id="t_parameter"  class="form-control1" placeholder="t_parameter" onfocus="on_focus('t_parameter','t_parameter')" onblur="on_blur('t_parameter')">
+												</div>
+											</div>
+											<div class="col-sm-2" id="t_default_text_validate">
+												<p class="help-block" style="color: red;">*</p>
+											</div>
+										</div>
+									
+										
+										
 										<div class="form-group">
 											<label class="col-md-2 control-label">附近地图范围:</label>
 											<div class="col-md-8">

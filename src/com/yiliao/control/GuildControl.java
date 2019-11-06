@@ -33,10 +33,10 @@ public class GuildControl {
 	 */
 	@RequestMapping("getGuildList")
 	@ResponseBody
-	public void getGuildList(String guildName, int page, HttpServletRequest request,
+	public void getGuildList(String condition, int page, HttpServletRequest request,
 			HttpServletResponse response) {
 		String loginUser = (String) request.getSession().getAttribute("loginName");
-		PrintUtil.printWri(this.guildService.getGuildList(guildName, page,loginUser),
+		PrintUtil.printWri(this.guildService.getGuildList(condition, page,loginUser),
 				response);
 	}
 

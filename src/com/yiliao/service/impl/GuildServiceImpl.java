@@ -22,19 +22,21 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 	public JSONObject getGuildList(String guildName, int page, String loginUser) {
 		try {
 			Integer tUserId = 0;
-			if(!"admin".equals(loginUser)){
+			System.out.println("loginUser="+loginUser);
+		/*	if(!"admin".equals(loginUser)){
 				 String qSqlCard = " SELECT t_id FROM t_user WHERE t_idcard = ? ";
 				    Map<String, Object> userMapCard = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSqlCard, loginUser);
 				     tUserId = Integer.valueOf(userMapCard.get("t_id")+"");
-			}
+			}*/
 			  
-			    
+			
 			    
 			String cSql = " SELECT COUNT(t_id) AS total FROM t_guild WHERE 1=1 AND t_examine != 2 ";
 			 if(tUserId!=0){
 				 cSql = " SELECT COUNT(t_id) AS total FROM t_guild WHERE 1=1 AND t_examine != 2 and t_user_id="+tUserId;
 			 }
-			
+				System.out.println("guildName="+guildName);
+				
 			if(StringUtils.isNotBlank(guildName)){
 				cSql = cSql + "AND t_guild_name LIKE '%"+guildName+"%' ";
 			}
@@ -42,7 +44,7 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 			Map<String, Object> totalMap = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(cSql);
 			System.out.println("cSql="+cSql);
 			//查询列表
-			String qSql = " SELECT u.t_id AS id,g.t_id,g.t_anchor_number,g.t_guild_name,u.t_nickName,g.t_admin_name,g.t_admin_phone,g.t_extract,g.t_examine,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_guild g  ";
+			String qSql = " SELECT '"+ loginUser+"' as loginUser, u.t_id AS id,g.t_id,g.t_anchor_number,g.t_guild_name,u.t_nickName,g.t_admin_name,g.t_admin_phone,g.t_extract,g.t_examine,DATE_FORMAT(g.t_create_time,'%Y-%m-%d %T') AS t_create_time FROM t_guild g  ";
 			qSql = qSql + " LEFT JOIN t_user u ON g.t_user_id=u.t_id WHERE 1 = 1 AND t_examine != 2 ";
 			if(StringUtils.isNotBlank(guildName)){
 				qSql = qSql + " AND g.t_guild_name LIKE '%"+guildName+"%' ";
@@ -66,6 +68,7 @@ public class GuildServiceImpl extends ICommServiceImpl implements GuildService {
 				Map<String, Object> total = this.getFinalDao().getIEntitySQLDAO().findBySQLUniqueResultToMap(qSql, m.get("t_id"));
 			    
 				m.put("anchorNumber", total.get("anchorNumber"));
+				
 			}
 			
 			JSONObject json = new JSONObject();
